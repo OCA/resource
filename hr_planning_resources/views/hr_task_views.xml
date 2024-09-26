@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="hr_task_view_tree" model="ir.ui.view">
+        <field name="name">hr.task.view.tree</field>
+        <field name="model">hr.task</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="employee_id" />
+                <field name="type" />
+                <field name="date_start" />
+                <field name="date_end" />
+                <field name="planned_hours" widget="float_time" invisible="1" />
+                <field name="allocated_hours" widget="float_time" />
+            </tree>
+        </field>
+    </record>
+    <record id="hr_task_form_view" model="ir.ui.view">
+        <field name="name">hr.task.form.view</field>
+        <field name="model">hr.task</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button
+                        name="action_cancel"
+                        string="Cancel"
+                        type="object"
+                        class="btn btn-secondary oe_edit_only"
+                        attrs="{'invisible': [('state', 'in', ['cancel', 'finished'])]}"
+                    />
+                    <button
+                        name="action_planified"
+                        string="Set to Planified"
+                        type="object"
+                        attrs="{'invisible': [('state', 'not in', ['cancel', 'finished'])]}"
+                    />
+                    <button
+                        name="action_in_progress"
+                        string="In progress"
+                        type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('state', 'not in', ['planified'])]}"
+                    />
+                    <button
+                        name="action_finished"
+                        string="Finished"
+                        type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('state', 'not in', ['in_progress'])]}"
+                    />
+
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        options="{'clickable': '1'}"
+                    />
+                </header>
+
+                <field name="is_absent" invisible="1" />
+                <div
+                    role="alert"
+                    class="alert alert-warning mb-0 p-3 text-center"
+                    attrs="{'invisible': ['|', ('leave_warning', '=', False), ('employee_id', '=', False)]}"
+                >
+                    <p class="align-middle mb-0">
+                        <field name="leave_warning" nolabel="1" />
+                    </p>
+                </div>
+                <sheet>
+                    <label for="name" class="oe_edit_only" />
+                    <h2>
+                        <field name="name" />
+                    </h2>
+                    <group>
+                        <group name="general">
+                            <field
+                                name="employee_id"
+                                attrs="{'readonly': [('state', '!=', 'planified')]}"
+                            />
+                            <field name="user_id" invisible="1" />
+                            <field
+                                name="type"
+                                widget="radio"
+                                options="{'horizontal': true}"
+                                attrs="{'readonly': [('state', '!=', 'planified')]}"
+                            />
+                            <field
+                                name="project_id"
+                                context="{'default_user_id': user_id}"
+                                attrs="{'invisible': [('type', '!=', 'project')],'required': [('type', '=', 'project')],'readonly': [('state', '!=', 'planified')]}"
+                            />
+                            <field
+                                name="filtered_project_id"
+                                string="Filter by Project"
+                                attrs="{'invisible': [('type', '!=', 'task')]}"
+                            />
+                                <field
+                                name="task_id"
+                                context="{'default_user_id': user_id}"
+                                attrs="{'invisible': [('type', '!=', 'task')],'required': [('type', '=', 'task')], 'readonly': [('state', '!=', 'planified')]}"
+                            />
+                                <field
+                                name="ticket_id"
+                                context="{'default_user_id': user_id}"
+                                attrs="{'invisible': [('type', '!=', 'ticket')],'required': [('type', '=', 'ticket')], 'readonly': [('state', '!=', 'planified')]}"
+                            />
+
+                        </group>
+                        <group name="time">
+                            <label for="date_start" string="Date" />
+                            <div class="o_row">
+                                <field
+                                    name="date_start"
+                                    widget="daterange"
+                                    nolabel="1"
+                                    class="oe_inline"
+                                    options="{'related_end_date': 'date_end'}"
+                                    attrs="{'readonly': [('state', '!=', 'planified')]}"
+                                />
+                                <i
+                                    class="fa fa-long-arrow-right mx-2"
+                                    aria-label="Arrow icon"
+                                    title="Arrow"
+                                />
+                                <field
+                                    name="date_end"
+                                    widget="daterange"
+                                    nolabel="1"
+                                    class="oe_inline"
+                                    options="{'related_start_date': 'date_start'}"
+                                    attrs="{'readonly': [('state', '!=', 'planified')]}"
+                                />
+                            </div>
+                            <label for="allocated_hours" />
+                            <div class="o_row">
+                                <field
+                                    name="allocated_hours"
+                                    widget="float_time"
+                                    class="oe_inline"
+                                />
+                                <field name="allocated_percentage" invisible="1" />
+                            </div>
+                        </group>
+                    </group>
+                    <field name="recurrency_id" invisible="1" />
+                    <div class="my-4 d-block d-md-flex">
+                        <label for="repeat" />
+                        <field name="repeat" />
+                        <div class="o_checkbox_optional_field">
+                            <div
+                                attrs="{'invisible': [('repeat', '=', False)]}"
+                                class="d-flex"
+                            >
+                                <label for="repeat_interval" string="Every" />
+                                <field
+                                    name="repeat_interval"
+                                    class="ms-2"
+                                    style="max-width: 4rem;"
+                                />
+                                <field name="repeat_unit" class="ms-2" />
+                                <field
+                                    name="repeat_type"
+                                    nolabel="1"
+                                    class="ms-2"
+                                    attrs="{'required': [('repeat', '=', True)]}"
+                                />
+                                <field
+                                    name="repeat_until"
+                                    class="ms-2"
+                                    nolabel="1"
+                                    attrs="{'invisible': [('repeat_type', '!=', 'until')], 'required': [('repeat_type', '=', 'until'), ('repeat', '=', True)]}"
+                                />
+                                <field
+                                    name="repeat_number"
+                                    class="ms-2"
+                                    attrs="{'invisible': [('repeat_type', '!=', 'x_times')], 'required': [('repeat_type', '=', 'x_times'), ('repeat', '=', True)]}"
+                                    style="max-width: 4rem;"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field
+                        name="message_follower_ids"
+                        options="{'post_refresh':True}"
+                        groups="base.group_user"
+                    />
+                    <field name="activity_ids" />
+                    <field name="message_ids" />
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="hr_task_timeline_view" model="ir.ui.view">
+        <field name="name">hr.task.timeline.view</field>
+        <field name="model">hr.task</field>
+        <field name="type">timeline</field>
+        <field name="arch" type="xml">
+            <timeline
+                date_start="date_start"
+                date_stop="date_end"
+                default_group_by="employee_id"
+                event_open_popup="true"
+                mode="week"
+                colors="white: state == 'planified'; #f1807e: state == 'cancel'; #b9ffb1: state == 'in_progress'; #a5f3ff: state == 'finished';"
+            >
+                <field name="employee_id" />
+                <field name="planned_hours" />
+                <field name="allocated_hours" />
+                <field name="allocated_percentage" />
+                <field name="state" />
+                <field name="type" />
+                <field name="title" />
+                <templates>
+                    <t t-name="timeline-item">
+                        <div class="o_project_timeline_item">
+                            <span name="display_name" class="oe_timeline_item_name">
+                                <t t-esc="record.display_name" />
+                            </span>
+                            <small
+                                name="allocated_hours"
+                                class="text-info ml4 text-truncate"
+                                t-if="record.allocated_hours"
+                            >
+                                <t
+                                    t-esc="field_utils.format.float_time(record.allocated_hours)"
+                                />
+                            </small>
+                        </div>
+                    </t>
+                </templates>
+            </timeline>
+        </field>
+    </record>
+    <record id="hr_task_search_view" model="ir.ui.view">
+        <field name="name">hr.task.search.view</field>
+        <field name="model">hr.task</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="employee_id" />
+                <field name="project_id" />
+                <field name="task_id" />
+                <field name="ticket_id" />
+                <field name="department_id" />
+
+                <filter
+                    name="my_shifts"
+                    string="My Shifts"
+                    domain="[('user_id', '=', uid)]"
+                />
+                <!-- <filter
+                    name="my_team"
+                    string="My Team"
+                    domain="[('employee_parent_id.user_id', '=', uid)]"
+                /> -->
+                <filter
+                    name="my_department"
+                    string="My Department"
+                    domain="[('member_of_department', '=', True)]"
+                />
+                <separator />
+                <filter name="task" string="Task" domain="[('type', '=', 'task')]" />
+                <filter
+                    name="ticket"
+                    string="Ticket"
+                    domain="[('type', '=', 'ticket')]"
+                />
+                <filter
+                    name="project"
+                    string="Project"
+                    domain="[('type', '=', 'project')]"
+                />
+                <separator />
+                <filter
+                    name="planified"
+                    string="Planified"
+                    domain="[('state', '=', 'planified')]"
+                />
+                <filter
+                    name="in_progress"
+                    string="In Progress"
+                    domain="[('state', '=', 'in_progress')]"
+                />
+                <filter
+                    name="finished"
+                    string="Finished"
+                    domain="[('state', '=', 'finished')]"
+                />
+                <filter
+                    name="cancelled"
+                    string="Cancelled"
+                    domain="[('state', '=', 'cancel')]"
+                />
+                <separator />
+                <filter name="start_date" string="Start Date" date="date_start" />
+                <separator />
+                <filter name="end_date" string="End Date" date="date_end" />
+                <group expand="0" string="Group By">
+                    <filter
+                        name="departament_group"
+                        string="Department"
+                        context="{'group_by': 'department_id'}"
+                    />
+                    <filter
+                        name="employee_group"
+                        string="Employee"
+                        context="{'group_by': 'employee_id'}"
+                    />
+                    <filter
+                        name="type_group"
+                        string="Type"
+                        context="{'group_by': 'type'}"
+                    />
+                    <filter
+                        name="state_group"
+                        string="State"
+                        context="{'group_by': 'state'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="planner_timeline_view" model="ir.actions.act_window">
+        <field name="name">Planning resource</field>
+        <field name="res_model">hr.task</field>
+        <field name="view_mode">timeline,tree,form,search</field>
+    </record>
+    <record id="my_planning_timeline_view" model="ir.actions.act_window">
+        <field name="name">My Planning</field>
+        <field name="res_model">hr.task</field>
+        <field name="view_mode">timeline,tree,form,search</field>
+        <field name="context">{'search_default_my_shifts': 1}</field>
+    </record>
+    <record id="my_department_timeline_view" model="ir.actions.act_window">
+        <field name="name">My Department</field>
+        <field name="res_model">hr.task</field>
+        <field name="view_mode">timeline,tree,form,search</field>
+        <field name="context">{'search_default_my_department': 1}</field>
+
+    </record>
+
+</odoo>

@@ -1,0 +1,803 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * hr_planning_resources
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-09-26 18:40+0000\n"
+"PO-Revision-Date: 2024-09-26 18:40+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+"Language: \n"
+
+#. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/models/hr_leave.py:0
+#, python-format
+msgid " and"
+msgstr "Error translating text"
+
+#. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/models/hr_leave.py:0
+#, python-format
+msgid ""
+"%(employee)s %(time_off_type)s%(period_leaves)s. \n"
+""
+msgstr "Error translating text"
+
+#. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/models/hr_leave.py:0
+#, python-format
+msgid "%(prefix)s from the %(dfrom)s to the %(dto)s"
+msgstr "%(prefix)s del %(dfrom)s al %(dto)s"
+
+#. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/models/hr_leave.py:0
+#, python-format
+msgid "%(prefix)s from the %(dfrom_date)s at %(dfrom)sto the %(dto_date)s at %(dto)s"
+msgstr "%(prefix)s del %(dfrom_date)s a las %(dfrom)sto del %(dto_date)s a las %(dto)s"
+
+#. module: hr_planning_resources
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_form_view
+msgid "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" title=\"Arrow\"/>"
+msgstr "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" title=\"Arrow\"/>"
+
+#. module: hr_planning_resources
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.res_config_settings_view_form
+msgid ""
+"<span class=\"o_form_label\" name=\"project_forecast_msg\">\n"
+"                                    Recurring Tasks\n"
+"                                </span>"
+msgstr ""
+"<span class=\"o_form_label\" name=\"project_forecast_msg\">\n"
+"                                    Tareas recurrentes\n"
+"                                </span>"
+
+#. module: hr_planning_resources
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.res_config_settings_view_form
+msgid "<span>months ahead</span>"
+msgstr "<span>meses por delante</span>"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__message_needaction
+msgid "Action Needed"
+msgstr "Acción necesaria"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__activity_ids
+msgid "Activities"
+msgstr "Actividades"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Emblema de actividad de excepción"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__activity_state
+msgid "Activity State"
+msgstr "Estado de la actividad"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Ícono de tipo de actvidad"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__allocated_hours
+msgid "Allocated Time"
+msgstr "Tiempo asignado"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__allocated_percentage
+msgid "Allocated Time %"
+msgstr "Tiempo asignado"
+
+#. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/models/hr_task_recurrency.py:0
+#, python-format
+msgid "An shift must be in the same company as its recurrency."
+msgstr "Un turno debe estar en la misma empresa que su recurrencia."
+
+#. module: hr_planning_resources
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.create_hr_task_view_form
+msgid "Are you sure you want to plan a resource?"
+msgstr "¿Está seguro de que desea planificar un recurso?"
+
+#. module: hr_planning_resources
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.helpdesk_ticket_edit_view_form
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.view_edit_project_form
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.view_project_task_form
+msgid "Assing Planning"
+msgstr "Assing Planning"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__message_attachment_count
+msgid "Attachment Count"
+msgstr "Nº de archivos adjuntos"
+
+#. module: hr_planning_resources
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.create_hr_task_view_form
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_form_view
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task__state__cancel
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_search_view
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: hr_planning_resources
+#: model:ir.model,name:hr_planning_resources.model_res_company
+msgid "Companies"
+msgstr "Empresas"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__company_id
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task_recurrency__company_id
+msgid "Company"
+msgstr "Empresa"
+
+#. module: hr_planning_resources
+#: model:ir.model,name:hr_planning_resources.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: hr_planning_resources
+#: model:ir.ui.menu,name:hr_planning_resources.menu_settings
+msgid "Configuration"
+msgstr "Configuración"
+
+#. module: hr_planning_resources
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.create_hr_task_view_form
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__confirm_delete
+msgid "Confirm tasks Deletion"
+msgstr "Confirmar eliminación de tareas"
+
+#. module: hr_planning_resources
+#: model:ir.model,name:hr_planning_resources.model_create_hr_task
+msgid "Create HR Task"
+msgstr "Crear tarea de RR. HH"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_create_hr_task__create_uid
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__create_uid
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task_recurrency__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_create_hr_task__create_date
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__create_date
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task_recurrency__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: hr_planning_resources
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_form_view
+msgid "Date"
+msgstr "Fecha"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task__repeat_unit__day
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task_recurrency__repeat_unit__day
+msgid "Days"
+msgstr "Días"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__department_id
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_search_view
+msgid "Department"
+msgstr "Departamento"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_create_hr_task__display_name
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__display_name
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task_recurrency__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__duration
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__planned_hours
+msgid "Duration"
+msgstr "Duración"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__email_cc
+msgid "Email cc"
+msgstr "Correo electrónico cc"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__employee_id
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_search_view
+msgid "Employee"
+msgstr "Empleado"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__is_absent
+msgid "Employees on Time Off"
+msgstr "Empleados en tiempo libre"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_create_hr_task__date_end
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__date_end
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_search_view
+msgid "End Date"
+msgstr "Fecha de Final"
+
+#. module: hr_planning_resources
+#: model:ir.model.constraint,message:hr_planning_resources.constraint_hr_task_date_check
+msgid "Error: End date must be greater than start date!"
+msgstr "La fecha de finalización debe ser posterior a la de Inicio"
+
+#. module: hr_planning_resources
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_form_view
+msgid "Every"
+msgstr "Cada"
+
+#. module: hr_planning_resources
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_form_view
+msgid "Filter by Project"
+msgstr "Filtrar por proyecto:"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__filtered_project_id
+msgid "Filtered Project"
+msgstr "Proyecto filtrado"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task__state__finished
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_form_view
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_search_view
+msgid "Finished"
+msgstr "Terminado"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Contactos)"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,help:hr_planning_resources.field_hr_task__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Icono de Font Awesome ej. fa-tasks"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task__repeat_type__forever
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task_recurrency__repeat_type__forever
+msgid "Forever"
+msgstr "Siempre"
+
+#. module: hr_planning_resources
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.res_config_settings_view_form
+msgid "Generate shifts"
+msgstr "Generar turnos"
+
+#. module: hr_planning_resources
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_search_view
+msgid "Group By"
+msgstr "GroupBy"
+
+#. module: hr_planning_resources
+#: model:ir.model,name:hr_planning_resources.model_hr_task
+msgid "HR Planning Resource"
+msgstr "Recurso de planificación de RR. HH"
+
+#. module: hr_planning_resources
+#: model:ir.actions.server,name:hr_planning_resources.ir_cron_hr_task_schedule_ir_actions_server
+#: model:ir.cron,cron_name:hr_planning_resources.ir_cron_hr_task_schedule
+msgid "HR Planning Resources: generate next recurring shifts"
+msgstr "Recursos de planificación de RR. HH.: generar próximos turnos recurrentes"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__has_message
+msgid "Has Message"
+msgstr "Tiene mensaje"
+
+#. module: hr_planning_resources
+#: model:ir.model,name:hr_planning_resources.model_helpdesk_ticket
+msgid "Helpdesk Ticket"
+msgstr "Ticket de Mesa de Servicio"
+
+#. module: hr_planning_resources
+#: model:ir.model,name:hr_planning_resources.model_hr_task_recurrency
+msgid "HrTaskRecurrency"
+msgstr "HrTaskRecurrency"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_create_hr_task__active_id
+#: model:ir.model.fields,field_description:hr_planning_resources.field_create_hr_task__id
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__id
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task_recurrency__id
+msgid "ID"
+msgstr "ID"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__activity_exception_icon
+msgid "Icon"
+msgstr "Ícono"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,help:hr_planning_resources.field_hr_task__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Ícono para indicar una actividad de excepción."
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,help:hr_planning_resources.field_hr_task__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcado hay nuevos mensajes que requieren su atención."
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,help:hr_planning_resources.field_hr_task__message_has_error
+#: model:ir.model.fields,help:hr_planning_resources.field_hr_task__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si se encuentra marcado, algunos mensajes tienen error de envío."
+
+#. module: hr_planning_resources
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task__state__in_progress
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_search_view
+msgid "In Progress"
+msgstr "En progreso"
+
+#. module: hr_planning_resources
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_form_view
+msgid "In progress"
+msgstr "En curso"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__message_is_follower
+msgid "Is Follower"
+msgstr "Es un seguidor"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task_recurrency__last_generated_end_datetime
+msgid "Last Generated End Date"
+msgstr "Última fecha de generación"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_create_hr_task____last_update
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task____last_update
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task_recurrency____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_create_hr_task__write_uid
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__write_uid
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task_recurrency__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_create_hr_task__write_date
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__write_date
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task_recurrency__write_date
+msgid "Last Updated on"
+msgstr "Ultima actualización en"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__leave_warning
+msgid "Leave Warning"
+msgstr "Error translating text"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Adjuntos principales"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__employee_parent_id
+msgid "Manager"
+msgstr "Administrador"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__member_of_department
+msgid "Member of department"
+msgstr "Miembro del departamento"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__message_has_error
+msgid "Message Delivery error"
+msgstr "Error de Envío de Mensaje"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_create_hr_task__res_model
+msgid "Model"
+msgstr "Modelo"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task__repeat_unit__month
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task_recurrency__repeat_unit__month
+msgid "Months"
+msgstr "Meses"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Fecha límite de Mi Actividad"
+
+#. module: hr_planning_resources
+#: model:ir.actions.act_window,name:hr_planning_resources.my_department_timeline_view
+#: model:ir.ui.menu,name:hr_planning_resources.menu_my_department
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_search_view
+msgid "My Department"
+msgstr "Mi departamento"
+
+#. module: hr_planning_resources
+#: model:ir.actions.act_window,name:hr_planning_resources.my_planning_timeline_view
+#: model:ir.ui.menu,name:hr_planning_resources.menu_my_planning
+msgid "My Planning"
+msgstr "Mi planificación"
+
+#. module: hr_planning_resources
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_search_view
+msgid "My Shifts"
+msgstr "Mis turnos"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: hr_planning_resources
+#. odoo-javascript
+#: code:addons/hr_planning_resources/static/src/xml/web_timeline.xml:0
+#: code:addons/hr_planning_resources/static/src/xml/web_timeline.xml:0
+#, python-format
+msgid "New"
+msgstr "Noticia"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "Siguiente evento en el calendario de actividades"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Fecha de vencimiento de siguiente actividad"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__activity_summary
+msgid "Next Activity Summary"
+msgstr "Resumen de la siguiente actividad"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__activity_type_id
+msgid "Next Activity Type"
+msgstr "Tipo de actividad Siguiente"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,help:hr_planning_resources.field_hr_task_recurrency__repeat_number
+msgid "No Of Repetitions of the plannings"
+msgstr "Nº de repeticiones de las planificaciones"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de acciones"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task__repeat_type__x_times
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task_recurrency__repeat_type__x_times
+msgid "Number of Repetitions"
+msgstr "Número de repeticiones"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__message_has_error_counter
+msgid "Number of errors"
+msgstr "Numero de errores"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,help:hr_planning_resources.field_hr_task__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Número de mensajes que requieren acción"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,help:hr_planning_resources.field_hr_task__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensajes con error de envío"
+
+#. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/models/hr_task.py:0
+#, python-format
+msgid "Operation not supported"
+msgstr "Operación no permitida1: the unknown socket address family number"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task__state__planified
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_search_view
+msgid "Planified"
+msgstr "Planificado"
+
+#. module: hr_planning_resources
+#: model:ir.ui.menu,name:hr_planning_resources.main_menu_planner
+msgid "Planning"
+msgstr "Planificación"
+
+#. module: hr_planning_resources
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.res_config_settings_view_form
+msgid "Planning Resources"
+msgstr "Recursos de planificación"
+
+#. module: hr_planning_resources
+#: model:ir.actions.act_window,name:hr_planning_resources.planner_timeline_view
+msgid "Planning resource"
+msgstr "Recurso de planificación"
+
+#. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/models/hr_task.py:0
+#: model:ir.model,name:hr_planning_resources.model_project_project
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__project_id
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task__type__project
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_search_view
+#, python-format
+msgid "Project"
+msgstr "Proyecto"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_res_company__task_generation_interval
+#: model:ir.model.fields,field_description:hr_planning_resources.field_res_config_settings__task_generation_interval
+msgid "Rate Of Shift Generation"
+msgstr "Tasa de generación de turnos"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__recurrency_id
+msgid "Recurrency"
+msgstr "Recurrencia"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task_recurrency__task_ids
+msgid "Related Planning Tasks"
+msgstr "Tareas de planificación relacionadas"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,help:hr_planning_resources.field_hr_task__user_id
+msgid "Related user name for the resource to manage its access."
+msgstr "Usuario relacionado con el recurso para gestionar su acceso."
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__repeat
+msgid "Repeat"
+msgstr "Repetir"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task_recurrency__repeat_interval
+msgid "Repeat Every"
+msgstr "Error translating text"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__repeat_type
+msgid "Repeat Type"
+msgstr "Repetir tipo"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__repeat_unit
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task_recurrency__repeat_unit
+msgid "Repeat Unit"
+msgstr "Repetir unidad"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__repeat_until
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task_recurrency__repeat_until
+msgid "Repeat Until"
+msgstr "Repetir hasta"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__repeat_interval
+msgid "Repeat every"
+msgstr "Repetir Cada"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__repeat_number
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task_recurrency__repeat_number
+msgid "Repetitions"
+msgstr "Repeticiones"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__resource_id
+msgid "Resource"
+msgstr "Recurso"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__activity_user_id
+msgid "Responsible User"
+msgstr "Usuario responsable"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Error de entrega del SMS"
+
+#. module: hr_planning_resources
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_form_view
+msgid "Set to Planified"
+msgstr "Configurar como planificado"
+
+#. module: hr_planning_resources
+#: model:ir.actions.act_window,name:hr_planning_resources.planning_action_settings
+#: model:ir.ui.menu,name:hr_planning_resources.menu_settings_config
+msgid "Settings"
+msgstr "Ajustes"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_create_hr_task__date_start
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__date_start
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_search_view
+msgid "Start Date"
+msgstr "Fecha de inicio"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__state
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_search_view
+msgid "State"
+msgstr "Estado"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,help:hr_planning_resources.field_hr_task__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"Estado basado en actividades\n"
+"Vencida: la fecha límite ya pasó\n"
+"Hoy: la fecha límite es hoy\n"
+"Planificada: actividades futuras."
+
+#. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/models/hr_task.py:0
+#: model:ir.model,name:hr_planning_resources.model_project_task
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__task_id
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task__type__task
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_search_view
+#, python-format
+msgid "Task"
+msgstr "Tarea"
+
+#. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/models/hr_task_recurrency.py:0
+#, python-format
+msgid "The number of repetitions cannot be negative."
+msgstr "El número de repeticiones no puede ser negativo."
+
+#. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/models/hr_task.py:0
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__ticket_id
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task__type__ticket
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_search_view
+#, python-format
+msgid "Ticket"
+msgstr "Entrada"
+
+#. module: hr_planning_resources
+#: model:ir.model,name:hr_planning_resources.model_hr_leave
+msgid "Time Off"
+msgstr "Permiso"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__title
+msgid "Title"
+msgstr "Sr. / Sra."
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__type
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_search_view
+msgid "Type"
+msgstr "Tipo"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,help:hr_planning_resources.field_hr_task__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipo de actividad de excepción registrada."
+
+#. module: hr_planning_resources
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task__repeat_type__until
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task_recurrency__repeat_type__until
+msgid "Until"
+msgstr "Hasta"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,help:hr_planning_resources.field_hr_task_recurrency__repeat_until
+msgid "Up to which date should the plannings be repeated"
+msgstr "Hasta qué fecha deben repetirse las planificaciones"
+
+#. module: hr_planning_resources
+#: model:ir.actions.server,name:hr_planning_resources.ir_cron_hr_task_ir_actions_server
+#: model:ir.cron,cron_name:hr_planning_resources.ir_cron_hr_task
+msgid "Update Task"
+msgstr "Actualizar tarea "
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__user_id
+msgid "User"
+msgstr "Usuario"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_create_hr_task__user_ids
+msgid "Users"
+msgstr "Usuarios"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__website_message_ids
+msgid "Website Messages"
+msgstr "Mensajes del Sitio Web"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,help:hr_planning_resources.field_hr_task__website_message_ids
+msgid "Website communication history"
+msgstr "Historial de comunicaciones del sitio web"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task_recurrency__repeat_type
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task__repeat_unit__week
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task_recurrency__repeat_unit__week
+msgid "Weeks"
+msgstr "Semanas"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,help:hr_planning_resources.field_hr_task__member_of_department
+msgid "Whether the employee is a member of the active user's department or one of it's child department."
+msgstr "Si el empleado es miembro del departamento del usuario activo o uno de sus departamentos secundarios."
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__working_days_count
+msgid "Working Days"
+msgstr "Días laborables"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task__repeat_unit__year
+#: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task_recurrency__repeat_unit__year
+msgid "Years"
+msgstr "Años"
+
+#. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/models/hr_leave.py:0
+#, python-format
+msgid "has requested time off"
+msgstr "ha solicitado tiempo libre"
+
+#. module: hr_planning_resources
+#: model:ir.model,name:hr_planning_resources.model_hr_task_mixin
+msgid "hr.task.mixin"
+msgstr "hr.task.mixin"
+
+#. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/models/hr_leave.py:0
+#, python-format
+msgid "is on time off"
+msgstr "está en tiempo libre"
