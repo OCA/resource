@@ -9,7 +9,9 @@ odoo.define("hr_task_planner.timeline_renderer", function (require) {
         }),
         _onNewTask: function (ev) {
             ev.preventDefault();
-            this.on_add(ev, () => {});
+            this.on_add(ev, () => {
+                console.log("on_add");
+            });
         },
     });
 });

@@ -122,11 +122,7 @@ class HrTask(models.Model):
     # Recurrency
     recurrency_id = fields.Many2one("hr.task.recurrency", string="Recurrency")
     repeat = fields.Boolean(
-        compute="_compute_repeat",
-        inverse="_inverse_repeat",
-        copy=True,
-        help="Modifications made to a shift only impact the current shift and not the other ones that are part of the recurrence. The same goes when deleting a recurrent shift. Disable this option to stop the recurrence.\n"
-        "To avoid polluting your database and performance issues, shifts are only created for the next 6 months. They are then gradually created as time passes by in order to always get shifts 6 months ahead. This value can be modified from the settings of Planning, in debug mode.",
+        compute="_compute_repeat", inverse="_inverse_repeat", copy=True
     )
     repeat_interval = fields.Integer(
         "Repeat every",
@@ -222,9 +218,7 @@ class HrTask(models.Model):
             for date_start, date_stop, attendance in work_interval
         ]
         date_start, date_end = (start, end)
-        if (
-            intervals and (date_end - date_start).days == 0
-        ):  # Then we want the first working day and keep the end hours of this day
+        if intervals and (date_end - date_start).days == 0:
             date_start = intervals[0][0]
             date_end = [
                 stop for start, stop in intervals if stop.date() == date_start.date()
@@ -295,7 +289,6 @@ class HrTask(models.Model):
         planning_tasks = self.filtered(lambda s: not s.company_id and not s.resource_id)
         tasks_with_calendar = self - planning_tasks
         for task in planning_tasks:
-            # for each planning task, compute the duration
             ratio = task.allocated_percentage / 100.0
             task.allocated_hours = task._calculate_task_duration() * ratio
         if tasks_with_calendar:
@@ -349,8 +342,7 @@ class HrTask(models.Model):
         start, stop = start_utc.replace(tzinfo=None), stop_utc.replace(tzinfo=None)
         if has_allocated_hours and self.date_start >= start and self.date_end <= stop:
             return self.allocated_hours
-        # if the task goes over the gantt period, compute the duration only within
-        # the gantt period
+
         ratio = self.allocated_percentage / 100.0
         working_hours = self._get_working_hours_over_period(
             start_utc, stop_utc, work_intervals, calendar_intervals
@@ -627,7 +619,7 @@ class HrTask(models.Model):
                     "date_end",
                     ">",
                     today,
-                ),  # only fetch the tasks containing today in their period or shifts in the future
+                ),
             ]
         )
         if not tasks:
@@ -676,8 +668,6 @@ class HrTask(models.Model):
             )
             for key in values
         ):
-            # User is trying to change this record's recurrence so we delete future tasks belonging to recurrence A
-            # and we create recurrence B from now on w/ the new parameters
             for task in self:
                 if task.recurrency_id and values.get("repeat") is None:
                     repeat_type = (

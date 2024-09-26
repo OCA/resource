@@ -21,7 +21,6 @@ class HrLeave(models.Model):
 
     @api.model
     def _get_leave_interval(self, date_from, date_to, employee_ids):
-        # Validated hr.leave create a resource.calendar.leaves
         calendar_leaves = self.env["resource.calendar.leaves"].search(
             [
                 ("time_type", "=", "leave"),
@@ -53,7 +52,6 @@ class HrLeave(models.Model):
                 ):
                     leaves[employee.id].append(leave)
 
-        # Get non-validated time off
         leaves_query = self.env["hr.leave"].search(
             [
                 ("employee_id", "in", employee_ids.ids),
@@ -99,7 +97,8 @@ class HrLeave(models.Model):
 
                 if period.get("show_hours", False):
                     period_leaves += _(
-                        "%(prefix)s from the %(dfrom_date)s at %(dfrom)s to the %(dto_date)s at %(dto)s",
+                        "%(prefix)s from the %(dfrom_date)s at %(dfrom)s"
+                        "to the %(dto_date)s at %(dto)s",
                         prefix=prefix,
                         dfrom_date=format_date(self.env, localize(dfrom)),
                         dfrom=format_time(self.env, localize(dfrom)),
@@ -128,18 +127,12 @@ class HrLeave(models.Model):
         return warning
 
     def _group_leaves(self, leaves, employee_id, date_from, date_to):
-        """
-        Returns all the leaves happening between `planned_date_begin` and `planned_date_end`
-        """
         work_times = {
             wk[0]: wk[1]
             for wk in employee_id.list_work_time_per_day(date_from, date_to)
         }
 
         def has_working_hours(start_dt, end_dt):
-            """
-            Returns `True` if there are any working days between `start_dt` and `end_dt`.
-            """
             diff_days = (end_dt - start_dt).days
             all_dates = [
                 start_dt.date() + timedelta(days=delta)

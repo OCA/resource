@@ -1,3 +1,6 @@
+from dateutil.relativedelta import relativedelta
+
+from odoo import Command, fields
 from odoo.tests import common, tagged
 
 
@@ -20,7 +23,6 @@ class TestHrPlanningCommon(common.TransactionCase):
         self.department = self.env["hr.department"].create(
             {
                 "name": "Department",
-                "user_id": self.john_doe_user.id,
             }
         )
         # create a new employee
@@ -36,21 +38,27 @@ class TestHrPlanningCommon(common.TransactionCase):
         self.project = self.env["project.project"].create(
             {
                 "name": "Project",
-                "user_id": self.env.ref("base.user_admin").id,
-                "user_ids": [(4, self.john_doe_user.id)],
-                "date_start": "2024-09-01",
-                "date_end": "2022-10-31",
+                "user_id": self.john_doe_user.id,
+                "date_start": fields.Date.today(),
             }
         )
 
         # create a new task
-        self.task = self.env["hr.task"].create(
+        self.task = self.env["project.task"].create(
             {
                 "name": "Task",
-                "employee_id": self.john_doe_employee.id,
+                "user_ids": [Command.link(self.john_doe_user.id)],
                 "project_id": self.project.id,
-                "date_start": "2024-09-01",
-                "date_end": "2024-10-31",
+                "date_assign": fields.Datetime.now(),
+                "date_deadline": fields.Datetime.now() + relativedelta(days=1),
+            }
+        )
+
+        # Create a new helpdesk.team
+        self.helpdesk_team = self.env["helpdesk.ticket.team"].create(
+            {
+                "name": "Team",
+                "user_ids": [Command.link(self.john_doe_user.id)],
             }
         )
 
@@ -59,9 +67,8 @@ class TestHrPlanningCommon(common.TransactionCase):
             {
                 "name": "Ticket",
                 "user_id": self.john_doe_user.id,
-                "user_ids": [(4, self.john_doe_user.id)],
-                "date_start": "2024-09-01",
-                "date_end": "2022-10-31",
+                "team_id": self.helpdesk_team.id,
+                "description": "Ticket description",
             }
         )
 
@@ -81,7 +88,7 @@ class TestHrPlanningCommon(common.TransactionCase):
                 "task_id": self.task.id if ttype == "task" else False,
                 "ticket_id": self.ticket.id if ttype == "ticket" else False,
                 "type": ttype,
-                "date_start": "2024-09-01",
-                "date_end": "2024-10-31",
+                "date_start": fields.Datetime.now(),
+                "date_end": fields.Datetime.now() + relativedelta(days=1),
             }
         )

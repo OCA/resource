@@ -1,7 +1,7 @@
 {
     "name": "HR Resource Planner",
-    "summary": "",
-    "version": "16.0.1.0.5",
+    "summary": "Comprehensive HR task planning integration.",
+    "version": "16.0.1.0.1",
     "category": "Human Resources",
     "website": "https://github.com/OCA/resource",
     "author": "Binhex, Odoo Community Association (OCA)",

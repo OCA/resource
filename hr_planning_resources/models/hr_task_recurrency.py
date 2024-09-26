@@ -1,10 +1,6 @@
-import logging
-
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.date_utils import get_timedelta
-
-_logger = logging.getLogger(__name__)
 
 
 class HrTaskRecurrency(models.Model):
@@ -76,7 +72,8 @@ class HrTaskRecurrency(models.Model):
                 name = _(f"Forever, every {recurrency.repeat_interval} week(s)")
             else:
                 name = _(
-                    f"Every {recurrency.repeat_interval} week(s) until {recurrency.repeat_until}"
+                    f"Every {recurrency.repeat_interval} "
+                    "week(s) until {recurrency.repeat_until}"
                 )
             result.append([recurrency.id, name])
         return result
@@ -111,14 +108,12 @@ class HrTaskRecurrency(models.Model):
             )
 
             if task:
-                # find the end of the recurrence
                 recurrence_end_dt = False
                 if recurrency.repeat_type == "until":
                     recurrence_end_dt = recurrency.repeat_until
                 if recurrency.repeat_type == "x_times":
                     recurrence_end_dt = recurrency._get_recurrence_last_datetime()
 
-                # find end of generation period (either the end of recurrence (if this one ends before the cron period), or the given `stop_datetime` (usually the cron period))
                 if not stop_datetime:
                     stop_datetime = fields.Datetime.now() + get_timedelta(
                         recurrency.company_id.task_generation_interval,
@@ -127,8 +122,8 @@ class HrTaskRecurrency(models.Model):
                 range_limit = min(dt for dt in [recurrence_end_dt, stop_datetime] if dt)
                 task_duration = task.date_end - task.date_start
 
-                def get_all_next_starts():
-                    for i in range(1, 365 * 5):  # 5 years if every day
+                def get_all_next_starts(task, recurrency, range_limit):
+                    for i in range(1, 365 * 5):
                         next_start = HrTask._add_delta_with_dst(
                             task.date_start,
                             get_timedelta(
@@ -151,7 +146,11 @@ class HrTaskRecurrency(models.Model):
                             "state": "planified",
                         }
                     )[0]
-                    for start in get_all_next_starts()
+                    for start in get_all_next_starts(
+                        task=task,
+                        recurrency=recurrency,
+                        range_limit=range_limit,
+                    )
                 ]
                 if task_values_list:
                     HrTask.create(task_values_list)
@@ -190,7 +189,9 @@ class HrTaskRecurrency(models.Model):
         if timedelta.days > 999:
             raise ValidationError(
                 _(
-                    "Recurring shifts cannot be planned further than 999 days in the future. If you need to schedule beyond this limit, please set the recurrence to repeat forever instead."
+                    "Recurring shifts cannot be planned further than 999 days in the "
+                    "future. If you need to schedule beyond this limit, please set "
+                    "the recurrence to repeat forever instead."
                 )
             )
         return date_end[0]["date_end"] + timedelta
