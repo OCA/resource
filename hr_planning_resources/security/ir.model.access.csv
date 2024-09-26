@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_task,hr.task.access,model_hr_task,base.group_user,1,1,1,1
+access_create_hr_task_manager,create_hr_task_manager,model_create_hr_task,,1,1,1,1
+access_hr_task_recurrency_manager,hr_task_recurrency_manager,model_hr_task_recurrency,,1,1,1,1

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="create_hr_task_view_form" model="ir.ui.view">
+        <field name="name">create.hr.task.view.form</field>
+        <field name="model">create.hr.task</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <p>Are you sure you want to plan a resource?</p>
+                    <footer>
+                        <button
+                            name="action_confirm"
+                            string="Confirm"
+                            type="object"
+                            class="btn-primary"
+                        />
+                        <button
+                            string="Cancel"
+                            class="btn-secondary"
+                            special="cancel"
+                        />
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
