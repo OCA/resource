@@ -5,7 +5,7 @@ from odoo.tools.date_utils import get_timedelta
 
 class HrTaskRecurrency(models.Model):
     _name = "hr.task.recurrency"
-    _description = "HrTaskRecurrency"
+    _description = "Hr Task Recurrency"
 
     task_ids = fields.One2many(
         comodel_name="hr.task",
@@ -101,57 +101,17 @@ class HrTaskRecurrency(models.Model):
     def _repeat_task(self, stop_datetime=False):
         HrTask = self.env["hr.task"]
         for recurrency in self:
-            task = HrTask.search(
-                [("recurrency_id", "=", recurrency.id)],
-                limit=1,
-                order="date_start DESC",
-            )
-
+            task = self._get_latest_task(recurrency)
             if task:
-                recurrence_end_dt = False
-                if recurrency.repeat_type == "until":
-                    recurrence_end_dt = recurrency.repeat_until
-                if recurrency.repeat_type == "x_times":
-                    recurrence_end_dt = recurrency._get_recurrence_last_datetime()
-
-                if not stop_datetime:
-                    stop_datetime = fields.Datetime.now() + get_timedelta(
-                        recurrency.company_id.task_generation_interval,
-                        "month",
-                    )
+                recurrence_end_dt = self._get_recurrence_end_datetime(recurrency)
+                stop_datetime = self._get_stop_datetime(recurrency, stop_datetime)
                 range_limit = min(dt for dt in [recurrence_end_dt, stop_datetime] if dt)
                 task_duration = task.date_end - task.date_start
 
-                def get_all_next_starts(task, recurrency, range_limit):
-                    for i in range(1, 365 * 5):
-                        next_start = HrTask._add_delta_with_dst(
-                            task.date_start,
-                            get_timedelta(
-                                recurrency.repeat_interval * i,
-                                recurrency.repeat_unit,
-                            ),
-                        )
-                        if next_start >= range_limit:
-                            return
-                        yield next_start
+                task_values_list = self._generate_task_values_list(
+                    task, recurrency, range_limit, task_duration
+                )
 
-                task_values_list = [
-                    task.copy_data(
-                        {
-                            "date_start": start,
-                            "date_end": start + task_duration,
-                            "recurrency_id": recurrency.id,
-                            "company_id": recurrency.company_id.id,
-                            "repeat": True,
-                            "state": "planified",
-                        }
-                    )[0]
-                    for start in get_all_next_starts(
-                        task=task,
-                        recurrency=recurrency,
-                        range_limit=range_limit,
-                    )
-                ]
                 if task_values_list:
                     HrTask.create(task_values_list)
                     recurrency.write(
@@ -161,9 +121,58 @@ class HrTaskRecurrency(models.Model):
                             ]
                         }
                     )
-
             else:
                 recurrency.unlink()
+
+    def _get_latest_task(self, recurrency):
+        return self.env["hr.task"].search(
+            [("recurrency_id", "=", recurrency.id)],
+            limit=1,
+            order="date_start DESC",
+        )
+
+    def _get_recurrence_end_datetime(self, recurrency):
+        if recurrency.repeat_type == "until":
+            return recurrency.repeat_until
+        if recurrency.repeat_type == "x_times":
+            return recurrency._get_recurrence_last_datetime()
+        return False
+
+    def _get_stop_datetime(self, recurrency, stop_datetime):
+        if not stop_datetime:
+            stop_datetime = fields.Datetime.now() + get_timedelta(
+                recurrency.company_id.task_generation_interval,
+                "month",
+            )
+        return stop_datetime
+
+    def _generate_task_values_list(self, task, recurrency, range_limit, task_duration):
+        def get_all_task_next_starts(task, recurrency, range_limit):
+            for i in range(1, 365 * 5):
+                next_start = self.env["hr.task"]._add_delta_with_dst(
+                    task.date_start,
+                    get_timedelta(
+                        recurrency.repeat_interval * i,
+                        recurrency.repeat_unit,
+                    ),
+                )
+                if next_start >= range_limit:
+                    return
+                yield next_start
+
+        return [
+            task.copy_data(
+                {
+                    "date_start": start,
+                    "date_end": start + task_duration,
+                    "recurrency_id": recurrency.id,
+                    "company_id": recurrency.company_id.id,
+                    "repeat": True,
+                    "state": "planified",
+                }
+            )[0]
+            for start in get_all_task_next_starts(task, recurrency, range_limit)
+        ]
 
     def _delete_task(self, date_start):
         tasks = self.env["hr.task"].search(
@@ -190,8 +199,7 @@ class HrTaskRecurrency(models.Model):
             raise ValidationError(
                 _(
                     "Recurring shifts cannot be planned further than 999 days in the "
-                    "future. If you need to schedule beyond this limit, please set "
-                    "the recurrence to repeat forever instead."
+                    "future."
                 )
             )
         return date_end[0]["date_end"] + timedelta

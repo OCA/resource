@@ -1,60 +1,77 @@
-from odoo import fields, models
+from odoo import _, fields, models
+from odoo.exceptions import UserError
 
 
 class CreateHrTask(models.TransientModel):
     _name = "create.hr.task"
     _description = "Create HR Task"
 
-    res_model = fields.Char(string="Model", required=True)
-    active_id = fields.Integer(string="ID", required=True)
-    user_ids = fields.Many2many("res.users", string="Users", required=True)
+    user_id = fields.Many2one(
+        "res.users", string="Users", default=lambda self: self.env.user
+    )
     date_start = fields.Datetime(string="Start Date", required=True)
     date_end = fields.Datetime(string="End Date", required=True)
 
     def _get_type(self, res_model):
-        if res_model == "project.task":
-            return "task"
-        elif res_model == "project.project":
-            return "project"
-        elif res_model == "helpdesk.ticket":
-            return "ticket"
-        else:
-            return ""
+        """Returns the type based on the resource model."""
+        type_map = {
+            "project.task": "task",
+            "project.project": "project",
+            "helpdesk.ticket": "ticket",
+        }
+        return type_map.get(res_model, False)
 
     def action_confirm(self):
-        users = self.env.context.get("default_user_ids", [])
-        res_model = self.env.context.get("default_res_model", "project.task")
-        active_id = self.env.context.get("active_id", False)
+        # Retrieve context parameters
+        res_model = self.env.context.get("default_res_model")
+        res_id = self.env.context.get("default_res_id")
 
-        date_start = (
-            self.env.context.get("default_start_date", False) or fields.Datetime.now()
-        )
-        date_end = (
-            self.env.context.get("default_end_date", False) or fields.Datetime.now()
-        )
-
-        record_type = self._get_type(res_model)
-        employee_ids = self.env["res.users"].browse(users).mapped("employee_id")
-        record_id = self.env[res_model].browse(active_id)
-        hr_task_sudo = self.env["hr.task"].sudo()
-
-        hr_tasks = self.env["hr.task"].search(
-            [
-                ("name", "=", record_id.name),
-                ("employee_id", "in", employee_ids.ids),
-            ]
-        )
-
-        employee_ids = employee_ids - hr_tasks.mapped("employee_id")
-        for employee_id in employee_ids:
-            hr_task_sudo.create(
-                {
-                    "type": record_type,
-                    "employee_id": employee_id.id,
-                    "date_start": date_start,
-                    "date_end": date_end,
-                    "task_id": (active_id if record_type == "task" else False),
-                    "project_id": (active_id if record_type == "project" else False),
-                    "ticket_id": (active_id if record_type == "ticket" else False),
-                }
+        # Input validation with descriptive error messages
+        if not res_model:
+            raise UserError(_("No default resource model specified."))
+        if not res_id:
+            raise UserError(_("No active record id provided."))
+        if not self.user_id.employee_id:
+            raise UserError(
+                _("The selected user does not have an associated employee.")
             )
+
+        # Determine the record type
+        record_type = self._get_type(res_model)
+        if not record_type:
+            raise UserError(_("Unsupported resource model: %s") % res_model)
+
+        # Fetch the active record
+        record = self.env[res_model].browse(res_id)
+        if not record.exists():
+            raise UserError(_("The record does not exist."))
+
+        # Retrieve or create hr.task records
+        hr_task_sudo = self.env["hr.task"].sudo()
+        task_values = {
+            "type": record_type,
+            "employee_id": self.user_id.employee_id.id,
+            "date_start": self.date_start,
+            "date_end": self.date_end,
+            "task_id": res_id if record_type == "task" else False,
+            "project_id": res_id if record_type == "project" else False,
+            "ticket_id": res_id if record_type == "ticket" else False,
+        }
+        hr_task = hr_task_sudo.create(task_values)
+
+        message = _(
+            f"{hr_task.name} task created between {hr_task.date_start} and {hr_task.date_end}."
+        )
+
+        # Return notification message
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "title": _("HR Task Created"),
+                "message": message,
+                "sticky": True,
+                "type": "success",
+                "next": {"type": "ir.actions.act_window_close"},
+            },
+        }

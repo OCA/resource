@@ -5,22 +5,26 @@
         <field name="model">create.hr.task</field>
         <field name="arch" type="xml">
             <form>
+                <p colspan="2" class="alert alert-success" role="alert">
+                    <b>
+                        Create a new HR Task for the current user.
+                    </b>
+                </p>
                 <sheet>
-                    <p>Are you sure you want to plan a resource?</p>
-                    <footer>
-                        <button
-                            name="action_confirm"
-                            string="Confirm"
-                            type="object"
-                            class="btn-primary"
-                        />
-                        <button
-                            string="Cancel"
-                            class="btn-secondary"
-                            special="cancel"
-                        />
-                    </footer>
+                    <group>
+                        <group><field name="date_start" /></group>
+                        <group><field name="date_end" /></group>
+                    </group>
                 </sheet>
+                <footer>
+                    <button
+                        name="action_confirm"
+                        string="Confirm"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
             </form>
         </field>
     </record>
