@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.planning</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="55" />
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div
+                    class="app_settings_block"
+                    data-string="Planning Resources"
+                    string="Planning Resources"
+                    data-key="hr_planning_resources"
+                >
+                    <h2>Planning Resources</h2>
+                    <div class="row mt16 o_settings_container" name="planning">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label" name="project_forecast_msg">
+                                    Recurring Tasks
+                                </span>
+                                 <div class="content-group">
+                                    <div class="mt16">
+                                        <label
+                                            for="task_generation_interval"
+                                            class="o_light_label"
+                                            string="Generate shifts"
+                                        />
+                                        <field
+                                            name="task_generation_interval"
+                                            class="oe_inline col-4 col-lg-2 me-1 text-center"
+                                        />
+                                        <span>months ahead</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="planning_action_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'planning', 'bin_size': False}</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="main_menu_planner"
+        name="Planning"
+        web_icon="hr_planning_resources,static/description/planning_icon.png"
+        action="hr_planning_resources.planner_timeline_view"
+        sequence="40"
+    />
+
+    <!-- Schedule -->
+    <!-- <menuitem
+        id="menu_schedule"
+        name="Schedule"
+        parent="main_menu_planner"
+        sequence="10"
+    />
+    <menuitem
+        id="menu_by_resource"
+        name="By Resource"
+        parent="menu_schedule"
+        action="hr_planning_resources.my_planning_timeline_view"
+        sequence="10"
+    />
+    <menuitem
+        id="menu_by_role"
+        name="By Role"
+        parent="menu_schedule"
+        action="hr_planning_resources.my_planning_timeline_view"
+        sequence="12"
+    />
+    <menuitem
+        id="menu_by_project"
+        name="By Project"
+        parent="menu_schedule"
+        action="hr_planning_resources.my_planning_timeline_view"
+        sequence="14"
+    /> -->
+
+    <!-- My Planning -->
+    <menuitem
+        id="menu_my_planning"
+        name="My Planning"
+        parent="main_menu_planner"
+        action="hr_planning_resources.my_planning_timeline_view"
+        sequence="12"
+    />
+    <menuitem
+        id="menu_my_department"
+        name="My Department"
+        parent="main_menu_planner"
+        action="hr_planning_resources.my_department_timeline_view"
+        sequence="13"
+    />
+
+    <menuitem
+        id="menu_settings"
+        name="Configuration"
+        parent="main_menu_planner"
+        sequence="50"
+    />
+
+    <menuitem
+        id="menu_settings_config"
+        name="Settings"
+        parent="menu_settings"
+        sequence="10"
+        action="planning_action_settings"
+        groups="base.group_system"
+    />
+
+</odoo>
