@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="main_menu_planner"
+        name="Planning"
+        web_icon="hr_planning_oca,static/description/planning_icon.png"
+        sequence="40"
+    />
+
+</odoo>
