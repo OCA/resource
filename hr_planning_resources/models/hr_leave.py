@@ -88,7 +88,8 @@ class HrLeave(models.Model):
             dto = period["to"]
             if period.get("show_hours", False):
                 return _(
-                    "{prefix} from the {dfrom_date} at {dfrom_time} to the {dto_date} at {dto_time}"
+                    "{prefix} from the {dfrom_date} at {dfrom_time} to "
+                    "the {dto_date} at {dto_time}"
                 ).format(
                     prefix=prefix,
                     dfrom_date=format_date(self.env, localize(dfrom)),

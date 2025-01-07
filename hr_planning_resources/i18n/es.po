@@ -1,20 +1,19 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * hr_planning_resources
+# 	* hr_planning_resources
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-26 18:40+0000\n"
-"PO-Revision-Date: 2024-09-26 18:40+0000\n"
+"POT-Creation-Date: 2025-01-06 20:38+0000\n"
+"PO-Revision-Date: 2025-01-06 20:38+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"Language: \n"
 
 #. module: hr_planning_resources
 #. odoo-python
@@ -24,32 +23,19 @@ msgid " and"
 msgstr "Error translating text"
 
 #. module: hr_planning_resources
-#. odoo-python
-#: code:addons/hr_planning_resources/models/hr_leave.py:0
-#, python-format
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.create_hr_task_view_form
 msgid ""
-"%(employee)s %(time_off_type)s%(period_leaves)s. \n"
-""
-msgstr "Error translating text"
-
-#. module: hr_planning_resources
-#. odoo-python
-#: code:addons/hr_planning_resources/models/hr_leave.py:0
-#, python-format
-msgid "%(prefix)s from the %(dfrom)s to the %(dto)s"
-msgstr "%(prefix)s del %(dfrom)s al %(dto)s"
-
-#. module: hr_planning_resources
-#. odoo-python
-#: code:addons/hr_planning_resources/models/hr_leave.py:0
-#, python-format
-msgid "%(prefix)s from the %(dfrom_date)s at %(dfrom)sto the %(dto_date)s at %(dto)s"
-msgstr "%(prefix)s del %(dfrom_date)s a las %(dfrom)sto del %(dto_date)s a las %(dto)s"
+"<b>\n"
+"                        Create a new HR Task for the current user.\n"
+"                    </b>"
+msgstr ""
 
 #. module: hr_planning_resources
 #: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_form_view
-msgid "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" title=\"Arrow\"/>"
-msgstr "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" title=\"Arrow\"/>"
+msgid ""
+"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" "
+"title=\"Arrow\"/>"
+msgstr ""
 
 #. module: hr_planning_resources
 #: model_terms:ir.ui.view,arch_db:hr_planning_resources.res_config_settings_view_form
@@ -61,6 +47,13 @@ msgstr ""
 "<span class=\"o_form_label\" name=\"project_forecast_msg\">\n"
 "                                    Tareas recurrentes\n"
 "                                </span>"
+
+#. module: hr_planning_resources
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.helpdesk_ticket_edit_view_form
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.view_edit_project_form
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.view_project_task_form
+msgid "<span class=\"o_stat_text\">Planning Task</span>"
+msgstr ""
 
 #. module: hr_planning_resources
 #: model_terms:ir.ui.view,arch_db:hr_planning_resources.res_config_settings_view_form
@@ -110,16 +103,11 @@ msgid "An shift must be in the same company as its recurrency."
 msgstr "Un turno debe estar en la misma empresa que su recurrencia."
 
 #. module: hr_planning_resources
-#: model_terms:ir.ui.view,arch_db:hr_planning_resources.create_hr_task_view_form
-msgid "Are you sure you want to plan a resource?"
-msgstr "¿Está seguro de que desea planificar un recurso?"
-
-#. module: hr_planning_resources
 #: model_terms:ir.ui.view,arch_db:hr_planning_resources.helpdesk_ticket_edit_view_form
 #: model_terms:ir.ui.view,arch_db:hr_planning_resources.view_edit_project_form
 #: model_terms:ir.ui.view,arch_db:hr_planning_resources.view_project_task_form
 msgid "Assing Planning"
-msgstr "Assing Planning"
+msgstr ""
 
 #. module: hr_planning_resources
 #: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__message_attachment_count
@@ -141,7 +129,7 @@ msgstr "Cancelado"
 #. module: hr_planning_resources
 #: model:ir.model,name:hr_planning_resources.model_res_company
 msgid "Companies"
-msgstr "Empresas"
+msgstr "Compañías"
 
 #. module: hr_planning_resources
 #: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__company_id
@@ -152,7 +140,7 @@ msgstr "Empresa"
 #. module: hr_planning_resources
 #: model:ir.model,name:hr_planning_resources.model_res_config_settings
 msgid "Config Settings"
-msgstr "Ajustes de configuración"
+msgstr "Opciones de configuración"
 
 #. module: hr_planning_resources
 #: model:ir.ui.menu,name:hr_planning_resources.menu_settings
@@ -163,11 +151,6 @@ msgstr "Configuración"
 #: model_terms:ir.ui.view,arch_db:hr_planning_resources.create_hr_task_view_form
 msgid "Confirm"
 msgstr "Confirmar"
-
-#. module: hr_planning_resources
-#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__confirm_delete
-msgid "Confirm tasks Deletion"
-msgstr "Confirmar eliminación de tareas"
 
 #. module: hr_planning_resources
 #: model:ir.model,name:hr_planning_resources.model_create_hr_task
@@ -228,11 +211,6 @@ msgstr "Correo electrónico cc"
 #: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_search_view
 msgid "Employee"
 msgstr "Empleado"
-
-#. module: hr_planning_resources
-#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__is_absent
-msgid "Employees on Time Off"
-msgstr "Empleados en tiempo libre"
 
 #. module: hr_planning_resources
 #: model:ir.model.fields,field_description:hr_planning_resources.field_create_hr_task__date_end
@@ -308,7 +286,21 @@ msgstr "Recurso de planificación de RR. HH"
 #: model:ir.actions.server,name:hr_planning_resources.ir_cron_hr_task_schedule_ir_actions_server
 #: model:ir.cron,cron_name:hr_planning_resources.ir_cron_hr_task_schedule
 msgid "HR Planning Resources: generate next recurring shifts"
-msgstr "Recursos de planificación de RR. HH.: generar próximos turnos recurrentes"
+msgstr ""
+"Recursos de planificación de RR. HH.: generar próximos turnos recurrentes"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_helpdesk_ticket__hr_task_count
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task_mixin__hr_task_count
+#: model:ir.model.fields,field_description:hr_planning_resources.field_project_project__hr_task_count
+#: model:ir.model.fields,field_description:hr_planning_resources.field_project_task__hr_task_count
+msgid "HR Task Count"
+msgstr ""
+
+#. module: hr_planning_resources
+#: model:ir.model,name:hr_planning_resources.model_hr_task_mixin
+msgid "HR Task Mixin"
+msgstr "hr.task.mixin"
 
 #. module: hr_planning_resources
 #: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__has_message
@@ -322,16 +314,15 @@ msgstr "Ticket de Mesa de Servicio"
 
 #. module: hr_planning_resources
 #: model:ir.model,name:hr_planning_resources.model_hr_task_recurrency
-msgid "HrTaskRecurrency"
+msgid "Hr Task Recurrency"
 msgstr "HrTaskRecurrency"
 
 #. module: hr_planning_resources
-#: model:ir.model.fields,field_description:hr_planning_resources.field_create_hr_task__active_id
 #: model:ir.model.fields,field_description:hr_planning_resources.field_create_hr_task__id
 #: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__id
 #: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task_recurrency__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: hr_planning_resources
 #: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__activity_exception_icon
@@ -427,11 +418,6 @@ msgid "Messages"
 msgstr "Mensajes"
 
 #. module: hr_planning_resources
-#: model:ir.model.fields,field_description:hr_planning_resources.field_create_hr_task__res_model
-msgid "Model"
-msgstr "Modelo"
-
-#. module: hr_planning_resources
 #: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task__repeat_unit__month
 #: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task_recurrency__repeat_unit__month
 msgid "Months"
@@ -499,6 +485,20 @@ msgid "No Of Repetitions of the plannings"
 msgstr "Nº de repeticiones de las planificaciones"
 
 #. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/wizard/create_hr_task.py:0
+#, python-format
+msgid "No active record id provided."
+msgstr ""
+
+#. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/wizard/create_hr_task.py:0
+#, python-format
+msgid "No default resource model specified."
+msgstr ""
+
+#. module: hr_planning_resources
 #: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__message_needaction_counter
 msgid "Number of Actions"
 msgstr "Número de acciones"
@@ -525,22 +525,10 @@ msgid "Number of messages with delivery error"
 msgstr "Número de mensajes con error de envío"
 
 #. module: hr_planning_resources
-#. odoo-python
-#: code:addons/hr_planning_resources/models/hr_task.py:0
-#, python-format
-msgid "Operation not supported"
-msgstr "Operación no permitida1: the unknown socket address family number"
-
-#. module: hr_planning_resources
 #: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task__state__planified
 #: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_search_view
 msgid "Planified"
 msgstr "Planificado"
-
-#. module: hr_planning_resources
-#: model:ir.ui.menu,name:hr_planning_resources.main_menu_planner
-msgid "Planning"
-msgstr "Planificación"
 
 #. module: hr_planning_resources
 #: model_terms:ir.ui.view,arch_db:hr_planning_resources.res_config_settings_view_form
@@ -559,6 +547,7 @@ msgstr "Recurso de planificación"
 #: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__project_id
 #: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task__type__project
 #: model_terms:ir.ui.view,arch_db:hr_planning_resources.hr_task_search_view
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.view_edit_project_form
 #, python-format
 msgid "Project"
 msgstr "Proyecto"
@@ -568,6 +557,11 @@ msgstr "Proyecto"
 #: model:ir.model.fields,field_description:hr_planning_resources.field_res_config_settings__task_generation_interval
 msgid "Rate Of Shift Generation"
 msgstr "Tasa de generación de turnos"
+
+#. module: hr_planning_resources
+#: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__is_recompute_forced
+msgid "Recompute Forced?"
+msgstr "Forzar recalculo"
 
 #. module: hr_planning_resources
 #: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__recurrency_id
@@ -686,11 +680,38 @@ msgid "Task"
 msgstr "Tarea"
 
 #. module: hr_planning_resources
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.helpdesk_ticket_edit_view_form
+#: model_terms:ir.ui.view,arch_db:hr_planning_resources.view_project_task_form
+msgid "Tasks"
+msgstr "Tareas"
+
+#. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/models/hr_task_mixin.py:0
+#, python-format
+msgid "The method _compute_hr_task_count must be implemented in the subclass."
+msgstr "El método _compute_hr_task_count debe implementarse en la subclase."
+
+#. module: hr_planning_resources
 #. odoo-python
 #: code:addons/hr_planning_resources/models/hr_task_recurrency.py:0
 #, python-format
 msgid "The number of repetitions cannot be negative."
 msgstr "El número de repeticiones no puede ser negativo."
+
+#. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/wizard/create_hr_task.py:0
+#, python-format
+msgid "The record does not exist."
+msgstr "El registro no existe."
+
+#. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/wizard/create_hr_task.py:0
+#, python-format
+msgid "The selected user does not have an associated employee."
+msgstr "El usuario seleccionado no tiene un empleado asociado."
 
 #. module: hr_planning_resources
 #. odoo-python
@@ -705,7 +726,7 @@ msgstr "Entrada"
 #. module: hr_planning_resources
 #: model:ir.model,name:hr_planning_resources.model_hr_leave
 msgid "Time Off"
-msgstr "Permiso"
+msgstr "Ausencias"
 
 #. module: hr_planning_resources
 #: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__title
@@ -722,6 +743,13 @@ msgstr "Tipo"
 #: model:ir.model.fields,help:hr_planning_resources.field_hr_task__activity_exception_decoration
 msgid "Type of the exception activity on record."
 msgstr "Tipo de actividad de excepción registrada."
+
+#. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/wizard/create_hr_task.py:0
+#, python-format
+msgid "Unsupported resource model: %s"
+msgstr "No se admite el modelo de recurso: %s"
 
 #. module: hr_planning_resources
 #: model:ir.model.fields.selection,name:hr_planning_resources.selection__hr_task__repeat_type__until
@@ -746,7 +774,7 @@ msgid "User"
 msgstr "Usuario"
 
 #. module: hr_planning_resources
-#: model:ir.model.fields,field_description:hr_planning_resources.field_create_hr_task__user_ids
+#: model:ir.model.fields,field_description:hr_planning_resources.field_create_hr_task__user_id
 msgid "Users"
 msgstr "Usuarios"
 
@@ -769,8 +797,12 @@ msgstr "Semanas"
 
 #. module: hr_planning_resources
 #: model:ir.model.fields,help:hr_planning_resources.field_hr_task__member_of_department
-msgid "Whether the employee is a member of the active user's department or one of it's child department."
-msgstr "Si el empleado es miembro del departamento del usuario activo o uno de sus departamentos secundarios."
+msgid ""
+"Whether the employee is a member of the active user's department or one of "
+"it's child department."
+msgstr ""
+"Si el empleado es miembro del departamento del usuario activo o uno de sus "
+"departamentos secundarios."
 
 #. module: hr_planning_resources
 #: model:ir.model.fields,field_description:hr_planning_resources.field_hr_task__working_days_count
@@ -791,13 +823,31 @@ msgid "has requested time off"
 msgstr "ha solicitado tiempo libre"
 
 #. module: hr_planning_resources
-#: model:ir.model,name:hr_planning_resources.model_hr_task_mixin
-msgid "hr.task.mixin"
-msgstr "hr.task.mixin"
-
-#. module: hr_planning_resources
 #. odoo-python
 #: code:addons/hr_planning_resources/models/hr_leave.py:0
 #, python-format
 msgid "is on time off"
 msgstr "está en tiempo libre"
+
+#. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/models/hr_leave.py:0
+#, python-format
+msgid "{employee} {time_off_type}{period_leaves}. \n"
+msgstr ""
+
+#. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/models/hr_leave.py:0
+#, python-format
+msgid ""
+"{prefix} from the {dfrom_date} at {dfrom_time} to the {dto_date} at "
+"{dto_time}"
+msgstr "{prefix} desde el {dfrom_date} a las {dfrom_time} hasta el {dto_date} a las {dto_time}"
+
+#. module: hr_planning_resources
+#. odoo-python
+#: code:addons/hr_planning_resources/models/hr_leave.py:0
+#, python-format
+msgid "{prefix} from the {dfrom} to the {dto}"
+msgstr "{prefix} desde el {dfrom} hasta el {dto}"

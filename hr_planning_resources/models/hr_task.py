@@ -37,9 +37,7 @@ class HrTask(models.Model):
         return datetime.combine(fields.Date.context_today(self), time.max)
 
     def _get_default_employee(self):
-        return self.env["hr.employee"].search(
-            [("user_id", "=", self.env.uid)], limit=1
-        )
+        return self.env["hr.employee"].search([("user_id", "=", self.env.uid)], limit=1)
 
     name = fields.Char(compute="_compute_name", store=True)
     title = fields.Char(compute="_compute_title", store=True)
@@ -58,12 +56,8 @@ class HrTask(models.Model):
         "hr.department",
         related="employee_id.department_id",
     )
-    employee_parent_id = fields.Many2one(
-        related="employee_id.parent_id", store=True
-    )
-    member_of_department = fields.Boolean(
-        related="employee_id.member_of_department"
-    )
+    employee_parent_id = fields.Many2one(related="employee_id.parent_id", store=True)
+    member_of_department = fields.Boolean(related="employee_id.member_of_department")
     company_id = fields.Many2one(
         "res.company",
         default=lambda self: self.env.user.company_id.id,
@@ -167,9 +161,7 @@ class HrTask(models.Model):
         copy=True,
     )
 
-    is_recompute_forced = fields.Boolean(
-        default=False, string="Recompute Forced?"
-    )
+    is_recompute_forced = fields.Boolean(default=False, string="Recompute Forced?")
 
     @api.onchange("filtered_project_id")
     def _onchange_filtered_project_id(self):
@@ -209,12 +201,11 @@ class HrTask(models.Model):
 
     def _company_task_working_hours(self, start, end):
         company = self.company_id or self.env.company
-        work_interval = company.resource_calendar_id._work_intervals_batch(
-            start, end
-        )[False]
+        work_interval = company.resource_calendar_id._work_intervals_batch(start, end)[
+            False
+        ]
         intervals = [
-            (date_start, date_stop)
-            for date_start, date_stop, _ in work_interval
+            (date_start, date_stop) for date_start, date_stop, _ in work_interval
         ]
         date_start, date_end = (start, end)
         if intervals:
@@ -222,9 +213,7 @@ class HrTask(models.Model):
                 # Si las fechas de inicio y fin son el mismo día
                 date_start = intervals[0][0]
                 date_end = [
-                    stop
-                    for _, stop in intervals
-                    if stop.date() == date_start.date()
+                    stop for _, stop in intervals if stop.date() == date_start.date()
                 ][-1]
             else:
                 # Si las fechas de inicio y fin son diferentes días
@@ -240,9 +229,7 @@ class HrTask(models.Model):
         max_duration = (
             period.days + (1 if period.seconds else 0)
         ) * self.company_id.resource_calendar_id.hours_per_day
-        return (
-            min(task_duration, max_duration) if max_duration else task_duration
-        )
+        return min(task_duration, max_duration) if max_duration else task_duration
 
     def _get_task_working_hours_over_period(
         self, start_utc, end_utc, work_intervals, calendar_intervals
@@ -288,9 +275,7 @@ class HrTask(models.Model):
     )
     def _compute_task_allocated_hours(self):
         # Separate planning tasks from tasks with assigned resources
-        planning_tasks = self.filtered(
-            lambda s: not s.company_id and not s.resource_id
-        )
+        planning_tasks = self.filtered(lambda s: not s.company_id and not s.resource_id)
         tasks_with_calendar = self - planning_tasks
 
         # Calculate allocated hours for planning tasks
@@ -303,9 +288,7 @@ class HrTask(models.Model):
             return  # Early return if there are no tasks with calendars.
 
         # Determine the date range for planned tasks with calendars
-        start_utc = pytz.utc.localize(
-            min(tasks_with_calendar.mapped("date_start"))
-        )
+        start_utc = pytz.utc.localize(min(tasks_with_calendar.mapped("date_start")))
         end_utc = pytz.utc.localize(max(tasks_with_calendar.mapped("date_end")))
         # Get valid working intervals for the resource's calendar
         (
@@ -319,9 +302,9 @@ class HrTask(models.Model):
 
         for task in tasks_with_calendar:
             if task.is_recompute_forced:
-                time_delta = pytz.utc.localize(
-                    task.date_end
-                ) - pytz.utc.localize(task.date_start)
+                time_delta = pytz.utc.localize(task.date_end) - pytz.utc.localize(
+                    task.date_start
+                )
                 task.allocated_hours = time_delta.total_seconds() / 3600
             else:
                 # work_days_data = task.employee_id._get_work_days_data_batch(
@@ -353,16 +336,10 @@ class HrTask(models.Model):
         self.ensure_one()
 
         # Remove timezone info for comparison
-        start, stop = start_utc.replace(tzinfo=None), stop_utc.replace(
-            tzinfo=None
-        )
+        start, stop = start_utc.replace(tzinfo=None), stop_utc.replace(tzinfo=None)
 
         # Return allocated hours if they fall within the start and stop time range
-        if (
-            has_allocated_hours
-            and self.date_start >= start
-            and self.date_end <= stop
-        ):
+        if has_allocated_hours and self.date_start >= start and self.date_end <= stop:
             return self.allocated_hours
 
         # Calculate working hours within the given time frame
@@ -386,9 +363,7 @@ class HrTask(models.Model):
             calendar = task.resource_id.calendar_id
             tasks_per_calendar[calendar].add(task.id)
             # Update the min and max dates for the corresponding calendar
-            datetime_begin, datetime_end = planned_dates_per_calendar_id[
-                calendar.id
-            ]
+            datetime_begin, datetime_end = planned_dates_per_calendar_id[calendar.id]
             planned_dates_per_calendar_id[calendar.id] = (
                 min(datetime_begin, task.date_start),
                 max(datetime_end, task.date_end),
@@ -398,9 +373,7 @@ class HrTask(models.Model):
             if not calendar:
                 tasks.working_days_count = 0
                 continue
-            datetime_begin, datetime_end = planned_dates_per_calendar_id[
-                calendar.id
-            ]
+            datetime_begin, datetime_end = planned_dates_per_calendar_id[calendar.id]
             datetime_begin = timezone_datetime(datetime_begin)
             datetime_end = timezone_datetime(datetime_end)
 
@@ -434,9 +407,7 @@ class HrTask(models.Model):
             if not self.date_start or not self.date_end:
                 task.duration = 0.0
             else:
-                task.duration = (
-                    task.date_end - task.date_start
-                ).total_seconds() / 3600
+                task.duration = (task.date_end - task.date_start).total_seconds() / 3600
 
     @api.depends("recurrency_id")
     def _compute_repeat(self):
@@ -487,15 +458,11 @@ class HrTask(models.Model):
 
     def _inverse_repeat(self):
         for task in self:
-            if (
-                task.repeat and not task.recurrency_id.id
-            ):  # create the recurrence
+            if task.repeat and not task.recurrency_id.id:  # create the recurrence
                 repeat_until = False
                 repeat_number = 0
                 if task.repeat_type == "until":
-                    repeat_until = fields.Datetime.to_datetime(
-                        task.repeat_until
-                    )
+                    repeat_until = fields.Datetime.to_datetime(task.repeat_until)
                     repeat_until = (
                         repeat_until.replace(
                             tzinfo=pytz.timezone(
@@ -515,9 +482,7 @@ class HrTask(models.Model):
                     "repeat_type": task.repeat_type,
                     "company_id": task.company_id.id,
                 }
-                recurrence = self.env["hr.task.recurrency"].create(
-                    recurrency_values
-                )
+                recurrence = self.env["hr.task.recurrency"].create(recurrency_values)
                 task.recurrency_id = recurrence
                 task.recurrency_id._repeat_task()
             elif not task.repeat and task.recurrency_id.id:
@@ -625,9 +590,7 @@ class HrTask(models.Model):
             tz = pytz.timezone(self._get_tz())
         except pytz.UnknownTimeZoneError:
             tz = pytz.UTC
-        start = (
-            start.replace(tzinfo=pytz.utc).astimezone(tz).replace(tzinfo=None)
-        )
+        start = start.replace(tzinfo=pytz.utc).astimezone(tz).replace(tzinfo=None)
         result = start + delta
         return tz.localize(result).astimezone(pytz.utc).replace(tzinfo=None)
 
@@ -657,16 +620,12 @@ class HrTask(models.Model):
             for task in self:
                 if task.recurrency_id and values.get("repeat") is None:
                     repeat_type = (
-                        values.get("repeat_type")
-                        or task.recurrency_id.repeat_type
+                        values.get("repeat_type") or task.recurrency_id.repeat_type
                     )
                     repeat_until = (
-                        values.get("repeat_until")
-                        or task.recurrency_id.repeat_until
+                        values.get("repeat_until") or task.recurrency_id.repeat_until
                     )
-                    repeat_number = (
-                        values.get("repeat_number", 0) or task.repeat_number
-                    )
+                    repeat_number = values.get("repeat_number", 0) or task.repeat_number
                     if repeat_type == "until":
                         repeat_until = datetime.combine(
                             fields.Date.to_date(repeat_until),
@@ -675,8 +634,7 @@ class HrTask(models.Model):
                         repeat_until = (
                             repeat_until.replace(
                                 tzinfo=pytz.timezone(
-                                    task.company_id.resource_calendar_id.tz
-                                    or "UTC"
+                                    task.company_id.resource_calendar_id.tz or "UTC"
                                 )
                             )
                             .astimezone(pytz.utc)
@@ -696,9 +654,9 @@ class HrTask(models.Model):
                     }
                     task.recurrency_id.write(recurrency_values)
                     if task.repeat_type == "x_times":
-                        recurrency_values["repeat_until"] = (
-                            task.recurrency_id._get_recurrence_last_datetime()
-                        )
+                        recurrency_values[
+                            "repeat_until"
+                        ] = task.recurrency_id._get_recurrence_last_datetime()
                     date_end = (
                         task.date_end
                         if values.get("repeat_unit")
