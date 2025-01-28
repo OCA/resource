@@ -2,16 +2,23 @@
 <odoo>
     <!-- My Planning -->
     <menuitem
+        id="main_menu_planner"
+        name="Planning"
+        web_icon="hr_planning_resources,static/description/planning_icon.png"
+        action="hr_planning_resources.planner_timeline_view"
+        sequence="40"
+    />
+    <menuitem
         id="menu_my_planning"
         name="My Planning"
-        parent="hr_planning_oca.main_menu_planner"
+        parent="main_menu_planner"
         action="hr_planning_resources.my_planning_timeline_view"
         sequence="12"
     />
     <menuitem
         id="menu_my_department"
         name="My Department"
-        parent="hr_planning_oca.main_menu_planner"
+        parent="main_menu_planner"
         action="hr_planning_resources.my_department_timeline_view"
         sequence="13"
     />
@@ -19,17 +26,10 @@
     <menuitem
         id="menu_settings"
         name="Configuration"
-        parent="hr_planning_oca.main_menu_planner"
+        parent="main_menu_planner"
         sequence="50"
     />
 
-    <menuitem
-        id="menu_settings_config"
-        name="Settings"
-        parent="menu_settings"
-        sequence="10"
-        action="planning_action_settings"
-        groups="base.group_system"
-    />
+
 
 </odoo>

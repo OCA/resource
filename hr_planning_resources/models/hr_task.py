@@ -1,14 +1,9 @@
-from collections import defaultdict
 from datetime import datetime, time
-from typing import Any
 
 import pytz
 from dateutil.relativedelta import relativedelta
 
 from odoo import _, api, fields, models
-
-from odoo.addons.resource.models.resource import Intervals, sum_intervals
-from odoo.addons.resource.models.resource_mixin import timezone_datetime
 
 TASK_TYPES = [
     ("task", _("Task")),
@@ -56,7 +51,6 @@ class HrTask(models.Model):
         "hr.department",
         related="employee_id.department_id",
     )
-    employee_parent_id = fields.Many2one(related="employee_id.parent_id", store=True)
     member_of_department = fields.Boolean(related="employee_id.member_of_department")
     company_id = fields.Many2one(
         "res.company",
@@ -80,31 +74,13 @@ class HrTask(models.Model):
     )
 
     date_end = fields.Datetime(string="End Date", required=True, tracking=True)
-    planned_hours = fields.Float(
-        string="Duration",
-        compute="_compute_planned_hours",
-        store=True,
-        tracking=True,
-    )
 
     allocated_hours = fields.Float(
         "Allocated Time",
-        compute="_compute_task_allocated_hours",
+        compute="_compute_allocated_hours",
         store=True,
         readonly=False,
     )
-    allocated_percentage = fields.Float(
-        "Allocated Time %",
-        default=100,
-        compute="_compute_task_allocated_percentage",
-        store=True,
-        readonly=False,
-        group_operator="avg",
-    )
-    working_days_count = fields.Float(
-        "Working Days", compute="_compute_task_working_days_count", store=True
-    )
-    duration = fields.Float(compute="_compute_task_duration")
 
     project_id = fields.Many2one("project.project", string="Project")
     filtered_project_id = fields.Many2one("project.project")
@@ -210,204 +186,15 @@ class HrTask(models.Model):
         date_start, date_end = (start, end)
         if intervals:
             if (date_end - date_start).days == 0:
-                # Si las fechas de inicio y fin son el mismo día
                 date_start = intervals[0][0]
                 date_end = [
                     stop for _, stop in intervals if stop.date() == date_start.date()
                 ][-1]
             else:
-                # Si las fechas de inicio y fin son diferentes días
                 date_start = intervals[0][0]
                 date_end = intervals[-1][1]
 
         return (date_start, date_end)
-
-    def _calculate_task_duration(self):
-        self.ensure_one()
-        period = self.date_end - self.date_start
-        task_duration = period.total_seconds() / 3600
-        max_duration = (
-            period.days + (1 if period.seconds else 0)
-        ) * self.company_id.resource_calendar_id.hours_per_day
-        return min(task_duration, max_duration) if max_duration else task_duration
-
-    def _get_task_working_hours_over_period(
-        self, start_utc, end_utc, work_intervals, calendar_intervals
-    ):
-        start = max(start_utc, pytz.utc.localize(self.date_start))
-        end = min(end_utc, pytz.utc.localize(self.date_end))
-        task_interval = Intervals(
-            [(start, end, self.env["resource.calendar.attendance"])]
-        )
-        working_intervals = work_intervals.get(
-            self.resource_id.id
-        ) or calendar_intervals.get(self.company_id.resource_calendar_id.id)
-        return sum_intervals(task_interval & working_intervals)
-
-    @api.depends(
-        "date_start",
-        "date_end",
-        "employee_id.resource_calendar_id",
-        "allocated_hours",
-    )
-    def _compute_task_allocated_percentage(self):
-        allocated_hours_field = self._fields["allocated_hours"]
-        tasks = self.filtered(
-            lambda task: not self.env.is_to_compute(allocated_hours_field, task)
-            and task.date_start
-            and task.date_end
-            and task.date_start != task.date_end
-        )
-        if not tasks:
-            return
-        for task in tasks:
-            task.allocated_percentage = (
-                100 * task.allocated_hours / task._calculate_task_duration()
-            )
-
-    @api.depends(
-        "date_start",
-        "date_end",
-        "employee_id",
-        "resource_id.calendar_id",
-        "company_id.resource_calendar_id",
-        "is_recompute_forced",
-    )
-    def _compute_task_allocated_hours(self):
-        # Separate planning tasks from tasks with assigned resources
-        planning_tasks = self.filtered(lambda s: not s.company_id and not s.resource_id)
-        tasks_with_calendar = self - planning_tasks
-
-        # Calculate allocated hours for planning tasks
-        for task in planning_tasks:
-            task.allocated_hours = task._calculate_task_duration() * (
-                task.allocated_percentage / 100.0
-            )
-
-        if not tasks_with_calendar:
-            return  # Early return if there are no tasks with calendars.
-
-        # Determine the date range for planned tasks with calendars
-        start_utc = pytz.utc.localize(min(tasks_with_calendar.mapped("date_start")))
-        end_utc = pytz.utc.localize(max(tasks_with_calendar.mapped("date_end")))
-        # Get valid working intervals for the resource's calendar
-        (
-            resource_work_intervals,
-            calendar_work_intervals,
-        ) = tasks_with_calendar.resource_id._get_valid_work_intervals(
-            start_utc,
-            end_utc,
-            calendars=tasks_with_calendar.company_id.resource_calendar_id,
-        )
-
-        for task in tasks_with_calendar:
-            if task.is_recompute_forced:
-                time_delta = pytz.utc.localize(task.date_end) - pytz.utc.localize(
-                    task.date_start
-                )
-                task.allocated_hours = time_delta.total_seconds() / 3600
-            else:
-                # work_days_data = task.employee_id._get_work_days_data_batch(
-                #     task.date_start, task.date_end
-                # )[task.employee_id.id]
-                # task.allocated_hours = work_days_data["hours"]
-
-                task.allocated_hours = task._get_task_duration_over_period(
-                    pytz.utc.localize(task.date_start),
-                    pytz.utc.localize(task.date_end),
-                    resource_work_intervals,
-                    calendar_work_intervals,
-                    has_allocated_hours=False,
-                )
-
-    def _get_task_duration_over_period(
-        self,
-        start_utc: datetime,
-        stop_utc: datetime,
-        work_intervals: Any,
-        calendar_intervals: Any,
-        has_allocated_hours: bool = True,
-    ) -> float:
-        if not start_utc.tzinfo or not stop_utc.tzinfo:
-            raise ValueError(
-                "Both start_utc and stop_utc must be timezone-aware datetime objects."
-            )
-
-        self.ensure_one()
-
-        # Remove timezone info for comparison
-        start, stop = start_utc.replace(tzinfo=None), stop_utc.replace(tzinfo=None)
-
-        # Return allocated hours if they fall within the start and stop time range
-        if has_allocated_hours and self.date_start >= start and self.date_end <= stop:
-            return self.allocated_hours
-
-        # Calculate working hours within the given time frame
-        ratio = self.allocated_percentage / 100.0
-        working_hours = self._get_task_working_hours_over_period(
-            start_utc, stop_utc, work_intervals, calendar_intervals
-        )
-        return working_hours * ratio
-
-    @api.depends("date_start", "date_end", "resource_id")
-    def _compute_task_working_days_count(self):
-        tasks_per_calendar = defaultdict(set)
-        planned_dates_per_calendar_id = defaultdict(
-            lambda: (datetime.max, datetime.min)
-        )
-        for task in self:
-            if not task.employee_id or not task.date_start or not task.date_end:
-                task.working_days_count = 0
-                continue
-
-            calendar = task.resource_id.calendar_id
-            tasks_per_calendar[calendar].add(task.id)
-            # Update the min and max dates for the corresponding calendar
-            datetime_begin, datetime_end = planned_dates_per_calendar_id[calendar.id]
-            planned_dates_per_calendar_id[calendar.id] = (
-                min(datetime_begin, task.date_start),
-                max(datetime_end, task.date_end),
-            )
-        for calendar, task_ids in tasks_per_calendar.items():
-            tasks = self.browse(list(task_ids))
-            if not calendar:
-                tasks.working_days_count = 0
-                continue
-            datetime_begin, datetime_end = planned_dates_per_calendar_id[calendar.id]
-            datetime_begin = timezone_datetime(datetime_begin)
-            datetime_end = timezone_datetime(datetime_end)
-
-            # Calculate total working hours available in the specified range
-            resources = tasks.resource_id
-            day_total = calendar._get_resources_day_total(
-                datetime_begin, datetime_end, resources
-            )
-            intervals = calendar._work_intervals_batch(
-                datetime_begin, datetime_end, resources
-            )
-
-            for task in tasks:
-                task.working_days_count = calendar._get_days_data(
-                    intervals.get(task.resource_id.id, Intervals([]))
-                    & Intervals(
-                        [
-                            (
-                                timezone_datetime(task.date_start),
-                                timezone_datetime(task.date_end),
-                                self.env["resource.calendar.attendance"],
-                            )
-                        ]
-                    ),
-                    day_total[task.resource_id.id],
-                )["days"]
-
-    @api.depends("date_start", "date_end")
-    def _compute_task_duration(self):
-        for task in self:
-            if not self.date_start or not self.date_end:
-                task.duration = 0.0
-            else:
-                task.duration = (task.date_end - task.date_start).total_seconds() / 3600
 
     @api.depends("recurrency_id")
     def _compute_repeat(self):
@@ -490,20 +277,6 @@ class HrTask(models.Model):
                 task.recurrency_id.unlink()
 
     @api.depends("date_start", "date_end", "employee_id")
-    def _compute_overlap_task_count(self):
-        for rec in self:
-            # Contar el número de tareas superpuestas para el mismo empleado
-            overlap_count = self.search_count(
-                [
-                    ("employee_id", "=", rec.employee_id.id),
-                    ("date_start", "<", rec.date_end),
-                    ("date_end", ">", rec.date_start),
-                    ("id", "!=", rec.id),  # Excluir la tarea actual
-                ]
-            )
-            rec.overlap_task_count = overlap_count
-
-    @api.depends("date_start", "date_end", "employee_id")
     def _compute_leave_warning(self):
         assigned_tasks = self.filtered(lambda s: s.employee_id and s.date_start)
         unassigned_tasks = self - assigned_tasks
@@ -564,16 +337,64 @@ class HrTask(models.Model):
         "date_end",
         "employee_id",
         "employee_id.resource_calendar_id",
+        "is_recompute_forced",
     )
-    def _compute_planned_hours(self):
+    def _compute_allocated_hours(self):
+        """
+        Compute working hours considering:
+        - Employee's work schedule (unless is_recompute_forced is True)
+        - Approved time off (vacations, leaves)
+        - Public holidays
+        """
         for record in self:
-            if record.date_start and record.date_end and record.employee_id:
-                work_days_data = record.employee_id._get_work_days_data_batch(
-                    record.date_start, record.date_end
+            if not (record.date_start and record.date_end and record.employee_id):
+                record.allocated_hours = 0.0
+                continue
+
+            if record.is_recompute_forced:
+                total_seconds = (record.date_end - record.date_start).total_seconds()
+                record.allocated_hours = round(total_seconds / 3600.0, 2)
+                continue
+
+            # Normal calculation for non-forced records
+            calendar = (
+                record.employee_id.resource_calendar_id
+                or record.env.company.resource_calendar_id
+            )
+            if not calendar:
+                record.allocated_hours = 0.0
+                continue
+
+            # Get base working hours without considering leaves
+            work_days_data = record.employee_id._get_work_days_data_batch(
+                record.date_start, record.date_end
+            )[record.employee_id.id]
+            base_hours = work_days_data["hours"]
+
+            # Get leaves (including vacations)
+            domain = [
+                ("employee_id", "=", record.employee_id.id),
+                ("state", "=", "validate"),
+                ("date_from", "<=", record.date_end),
+                ("date_to", ">=", record.date_start),
+            ]
+            leaves = record.env["hr.leave"].search(domain)
+
+            # Calculate leave hours
+            leave_hours = 0
+            for leave in leaves:
+                # Get overlapping period
+                leave_start = max(leave.date_from, record.date_start)
+                leave_end = min(leave.date_to, record.date_end)
+
+                # Calculate leave hours for the overlapping period
+                leave_days_data = record.employee_id._get_work_days_data_batch(
+                    leave_start, leave_end
                 )[record.employee_id.id]
-                record.planned_hours = work_days_data["hours"]
-            else:
-                record.planned_hours = 0.0
+                leave_hours += leave_days_data["hours"]
+
+            # Subtract leave hours from base hours
+            record.allocated_hours = max(0, base_hours - leave_hours)
 
     def _get_tz(self):
         return (

@@ -6,14 +6,16 @@
     "website": "https://github.com/OCA/resource",
     "author": "Binhex, Odoo Community Association (OCA)",
     "depends": [
-        "hr_planning_oca",
+        "project",
+        "web_timeline",
+        "helpdesk_mgmt",
+        "hr_holidays",
     ],
     "data": [
         "security/ir.model.access.csv",
         "data/hr_task_ir_cron.xml",
         "views/hr_task_views.xml",
         "views/project_views.xml",
-        "views/res_config_settings_views.xml",
         "wizard/create_hr_task_views.xml",
         "views/menus.xml",
     ],
