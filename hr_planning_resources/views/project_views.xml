@@ -23,7 +23,7 @@
                 <button
                     name="action_view_hr_task"
                     type="object"
-                    attrs="{'invisible': [('hr_task_count', '=', 0)]}"
+                    invisible="hr_task_count == 0"
                     class="oe_stat_button"
                     icon="fa-tasks"
                 >
@@ -51,7 +51,7 @@
                 <button
                     name="action_view_hr_task"
                     type="object"
-                    attrs="{'invisible': [('hr_task_count', '=', 0)]}"
+                    invisible="hr_task_count == 0"
                     class="oe_stat_button"
                     icon="fa-tasks"
                 >
@@ -64,7 +64,7 @@
                     </div>
                 </button>
             </xpath>
-            <xpath expr="//button[@name='action_assign_to_me']" position="before">
+            <xpath expr="//field[@name='stage_id']" position="before">
                 <button
                     name="action_create_hr_task"
                     string="Assing Planning"
@@ -86,7 +86,7 @@
                 <button
                     name="action_view_hr_task"
                     type="object"
-                    attrs="{'invisible': [('hr_task_count', '=', 0)]}"
+                    invisible="hr_task_count == 0"
                     class="oe_stat_button"
                     icon="fa-tasks"
                 >

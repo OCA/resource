@@ -25,27 +25,27 @@
                         string="Cancel"
                         type="object"
                         class="btn btn-secondary oe_edit_only"
-                        attrs="{'invisible': [('state', 'in', ['cancel', 'finished'])]}"
+                        invisible="state in ['cancel', 'finished']"
                     />
                     <button
                         name="action_planified"
                         string="Set to Planified"
                         type="object"
-                        attrs="{'invisible': [('state', 'not in', ['cancel', 'finished'])]}"
+                        invisible="state not in ['cancel', 'finished']"
                     />
                     <button
                         name="action_in_progress"
                         string="In progress"
                         type="object"
                         class="oe_highlight"
-                        attrs="{'invisible': [('state', 'not in', ['planified'])]}"
+                        invisible="state not in ['planified']"
                     />
                     <button
                         name="action_finished"
                         string="Finished"
                         type="object"
                         class="oe_highlight"
-                        attrs="{'invisible': [('state', 'not in', ['in_progress'])]}"
+                        invisible="state not in ['in_progress']"
                     />
 
                     <field
@@ -58,7 +58,7 @@
                 <div
                     role="alert"
                     class="alert alert-warning mb-0 p-3 text-center"
-                    attrs="{'invisible': ['|', ('leave_warning', '=', False), ('employee_id', '=', False)]}"
+                    invisible="leave_warning == False or employee_id == False"
                 >
                     <p class="align-middle mb-0">
                         <field name="leave_warning" nolabel="1" />
@@ -71,36 +71,39 @@
                     </h2>
                     <group>
                         <group name="general">
-                            <field
-                                name="employee_id"
-                                attrs="{'readonly': [('state', '!=', 'planified')]}"
-                            />
+                            <field name="employee_id" readonly="state != 'planified'" />
                             <field name="user_id" invisible="1" />
                             <field
                                 name="type"
                                 widget="radio"
                                 options="{'horizontal': true}"
-                                attrs="{'readonly': [('state', '!=', 'planified')]}"
+                                readonly="state != 'planified'"
                             />
                             <field
                                 name="project_id"
                                 context="{'default_user_id': user_id}"
-                                attrs="{'invisible': [('type', '!=', 'project')],'required': [('type', '=', 'project')],'readonly': [('state', '!=', 'planified')]}"
+                                invisible="type != 'project'"
+                                required="type == 'project'"
+                                readonly="state != 'planified'"
                             />
                             <field
                                 name="filtered_project_id"
                                 string="Filter by Project"
-                                attrs="{'invisible': [('type', '!=', 'task')]}"
+                                invisible="type != 'task'"
                             />
                                 <field
                                 name="task_id"
                                 context="{'default_user_id': user_id}"
-                                attrs="{'invisible': [('type', '!=', 'task')],'required': [('type', '=', 'task')], 'readonly': [('state', '!=', 'planified')]}"
+                                invisible="type != 'task'"
+                                required="type == 'task'"
+                                readonly="state != 'planified'"
                             />
                                 <field
                                 name="ticket_id"
                                 context="{'default_user_id': user_id}"
-                                attrs="{'invisible': [('type', '!=', 'ticket')],'required': [('type', '=', 'ticket')], 'readonly': [('state', '!=', 'planified')]}"
+                                invisible="type != 'ticket'"
+                                required="type == 'ticket'"
+                                readonly="state != 'planified'"
                             />
 
                         </group>
@@ -113,7 +116,7 @@
                                     nolabel="1"
                                     class="oe_inline"
                                     options="{'related_end_date': 'date_end'}"
-                                    attrs="{'readonly': [('state', '!=', 'planified')]}"
+                                    readonly="state != 'planified'"
                                 />
                                 <i
                                     class="fa fa-long-arrow-right mx-2"
@@ -126,7 +129,7 @@
                                     nolabel="1"
                                     class="oe_inline"
                                     options="{'related_start_date': 'date_start'}"
-                                    attrs="{'readonly': [('state', '!=', 'planified')]}"
+                                    readonly="state != 'planified'"
                                 />
                             </div>
 
@@ -157,10 +160,7 @@
                         <label for="repeat" />
                         <field name="repeat" style="margin-left: 0.5rem;" />
                         <div class="o_checkbox_optional_field">
-                            <div
-                                attrs="{'invisible': [('repeat', '=', False)]}"
-                                class="d-flex ml-2"
-                            >
+                            <div invisible="repeat == False" class="d-flex ml-2">
                                 <label for="repeat_interval" string="Every" />
                                 <field
                                     name="repeat_interval"
@@ -172,18 +172,20 @@
                                     name="repeat_type"
                                     nolabel="1"
                                     class="ms-2"
-                                    attrs="{'required': [('repeat', '=', True)]}"
+                                    required="repeat == True"
                                 />
                                 <field
                                     name="repeat_until"
                                     class="ms-2"
                                     nolabel="1"
-                                    attrs="{'invisible': [('repeat_type', '!=', 'until')], 'required': [('repeat_type', '=', 'until'), ('repeat', '=', True)]}"
+                                    invisible="repeat_type != 'until'"
+                                    required="repeat_type == 'until' and repeat == True"
                                 />
                                 <field
                                     name="repeat_number"
                                     class="ms-2"
-                                    attrs="{'invisible': [('repeat_type', '!=', 'x_times')], 'required': [('repeat_type', '=', 'x_times'), ('repeat', '=', True)]}"
+                                    invisible="repeat_type != 'x_times'"
+                                    required="repeat_type == 'x_times' and repeat == True"
                                     style="max-width: 4rem;"
                                 />
                             </div>
@@ -232,9 +234,7 @@
                                 class="text-info ml4 text-truncate"
                                 t-if="record.allocated_hours"
                             >
-                                <t
-                                    t-esc="field_utils.format.float_time(record.allocated_hours)"
-                                />
+                                <t t-esc="record.allocated_hours" />
                             </small>
                         </div>
                     </t>

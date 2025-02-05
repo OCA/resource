@@ -60,7 +60,8 @@ class CreateHrTask(models.TransientModel):
         hr_task = hr_task_sudo.create(task_values)
 
         message = _(
-            f"{hr_task.name} task created between {hr_task.date_start} and {hr_task.date_end}."
+            f"{hr_task.name} task created between "
+            f"{hr_task.date_start} and {hr_task.date_end}."
         )
 
         # Return notification message
