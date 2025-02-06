@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<template>
+    <t
+        t-name="TimelineRenderer"
+        t-inherit="web_timeline.TimelineRenderer"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//button[@t-on-click='_onTodayClicked']" position="before">
+             <button
+                t-on-click="_onNewTask"
+                class="btn btn-primary oe_hr_task_planner_new_task"
+                style="margin-right: 5px"
+            >
+            <i t-attf-class="fa fa-plus" title="New" />
+            <span class="d-none d-sm-inline"> New</span>
+        </button>
+        </xpath>
+    </t>
+</template>
