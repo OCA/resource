@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Daniel Reis
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<odoo noupdate="1">
+    <record id="role_technician" model="resource.role">
+        <field name="name">Technician</field>
+    </record>
+    <record id="role_supervisor" model="resource.role">
+        <field name="name">Supervisor</field>
+    </record>
+    <record id="role_driver" model="resource.role">
+        <field name="name">Driver</field>
+    </record>
+    <!-- Beauty salon / spa -->
+    <record id="role_hair_stylist" model="resource.role">
+        <field name="name">Hair Stylist</field>
+    </record>
+    <record id="role_manicurist" model="resource.role">
+        <field name="name">Manicurist</field>
+    </record>
+    <record id="role_esthetician" model="resource.role">
+        <field name="name">Esthetician</field>
+    </record>
+    <record id="role_massage_therapist" model="resource.role">
+        <field name="name">Massage Therapist</field>
+    </record>
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Daniel Reis
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<odoo>
+    <record id="resource_resource_form_roles" model="ir.ui.view">
+        <field name="name">resource.resource.form.roles</field>
+        <field name="model">resource.resource</field>
+        <field name="inherit_id" ref="resource.resource_resource_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='time_efficiency']" position="after">
+                <field name="role_ids" widget="many2many_tags" />
+                <field name="tag_ids" widget="many2many_tags" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="resource_resource_search_roles" model="ir.ui.view">
+        <field name="name">resource.resource.search.roles</field>
+        <field name="model">resource.resource</field>
+        <field name="inherit_id" ref="resource.view_resource_resource_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='working_period']" position="after">
+                <filter
+                    string="Role"
+                    name="role"
+                    domain="[]"
+                    context="{'group_by': 'role_ids'}"
+                />
+                <filter
+                    string="Tag"
+                    name="tag"
+                    domain="[]"
+                    context="{'group_by': 'tag_ids'}"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

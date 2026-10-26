@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Daniel Reis
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<odoo>
+    <record id="resource_tag_list" model="ir.ui.view">
+        <field name="name">resource.tag.list</field>
+        <field name="model">resource.tag</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="color" widget="color_picker" />
+            </list>
+        </field>
+    </record>
+    <record id="resource_tag_form" model="ir.ui.view">
+        <field name="name">resource.tag.form</field>
+        <field name="model">resource.tag</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            name="action_view_resources"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-users"
+                        >
+                            <field name="resource_count" string="Resources" />
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name" />
+                        <field name="color" widget="color_picker" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_resource_tag" model="ir.actions.act_window">
+        <field name="name">Resource Tags</field>
+        <field name="res_model">resource.tag</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

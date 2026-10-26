@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+role_user,Resource roles user,model_resource_role,base.group_user,1,1,1,0
+role_admin,Resource roles admin,model_resource_role,base.group_system,1,1,1,1
+tag_user,Resource tags user,model_resource_tag,base.group_user,1,1,1,0
+tag_admin,Resource tags admin,model_resource_tag,base.group_system,1,1,1,1
