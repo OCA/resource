@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Daniel Reis
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<odoo noupdate="1">
+    <record id="resource_technician" model="resource.resource">
+        <field name="name">John (technician)</field>
+        <field name="resource_type">user</field>
+    </record>
+    <record id="location_workshop" model="res.partner">
+        <field name="name">Downtown Workshop</field>
+        <field name="is_company" eval="True" />
+        <field name="is_resource_location" eval="True" />
+    </record>
+    <record id="location_depot" model="res.partner">
+        <field name="name">North Depot</field>
+        <field name="is_company" eval="True" />
+        <field name="is_resource_location" eval="True" />
+    </record>
+    <record id="presence_workshop" model="resource.location.presence">
+        <field name="resource_id" ref="resource_technician" />
+        <field name="location_id" ref="location_workshop" />
+        <field name="calendar_id" ref="resource.resource_calendar_std" />
+        <field name="sequence">10</field>
+    </record>
+    <record id="presence_depot" model="resource.location.presence">
+        <field name="resource_id" ref="resource_technician" />
+        <field name="location_id" ref="location_depot" />
+        <field name="sequence">20</field>
+    </record>
+</odoo>

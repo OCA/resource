@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Daniel Reis
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<odoo>
+    <record id="resource_resource_form" model="ir.ui.view">
+        <field name="name">resource.resource.form</field>
+        <field name="model">resource.resource</field>
+        <field name="inherit_id" ref="resource.resource_resource_form" />
+        <field name="arch" type="xml">
+            <group name="resource_details" position="after">
+                <group name="presence" string="Location presence" colspan="4">
+                    <field name="presence_ids" nolabel="1" colspan="2">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle" />
+                            <field name="location_id" />
+                            <field name="calendar_id" />
+                            <field name="date_start" optional="hide" />
+                            <field name="date_end" optional="hide" />
+                        </list>
+                    </field>
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>
